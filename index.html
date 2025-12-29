@@ -1,11 +1,11 @@
 <!DOCTYPE html>
-<html lang="ru">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Статистика видео Reels</title>
+    <title>Reel insights</title>
     <style>
         * {
             margin: 0;
@@ -16,23 +16,23 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
-            background: #000;
-            color: #fff;
+            background: #0c0f14;
+            color: #fafafa;
             overflow-x: hidden;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            padding-bottom: 60px;
         }
 
         .header {
             position: sticky;
             top: 0;
-            background: #000;
-            padding: 10px 16px;
+            background: #0c0f14;
+            padding: 14px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
             z-index: 100;
-            border-bottom: 0.5px solid #262626;
         }
 
         .header-left {
@@ -43,7 +43,10 @@
 
         .back-btn {
             cursor: pointer;
-            padding: 4px;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            color: #fafafa;
         }
 
         .back-btn svg {
@@ -54,88 +57,114 @@
         .header-title {
             font-size: 16px;
             font-weight: 600;
+            color: #fafafa;
         }
 
-        .stats-icon svg {
-            width: 24px;
-            height: 24px;
+        .menu-btn {
+            cursor: pointer;
+            padding: 0;
+            color: #fafafa;
+        }
+
+        .menu-btn svg {
+            width: 20px;
+            height: 20px;
         }
 
         .video-preview {
-            padding: 20px 16px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            gap: 12px;
-        }
-
-        .video-thumbnail {
-            width: 90px;
-            height: 160px;
-            background: #1a1a1a;
-            border-radius: 8px;
-            overflow: hidden;
-            position: relative;
-            border: 1px solid #262626;
-        }
-
-        .video-img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            background: linear-gradient(135deg, #2a2a2a, #1a1a1a);
-        }
-
-        .video-caption {
-            font-size: 13px;
-            color: #a8a8a8;
-            text-align: center;
-            padding: 0 20px;
-            line-height: 1.4;
-        }
-
-        .video-date {
-            font-size: 12px;
-            color: #737373;
-        }
-
-        .metrics {
-            display: flex;
-            justify-content: space-around;
-            padding: 20px 16px;
-            border-bottom: 0.5px solid #262626;
-        }
-
-        .metric {
+            padding: 20px 16px 16px;
             display: flex;
             flex-direction: column;
             align-items: center;
             gap: 10px;
         }
 
+        .video-thumbnail {
+            width: 140px;
+            height: 248px;
+            background: linear-gradient(180deg, #3d6b28 0%, #5a8f3d 50%, #3d6b28 100%);
+            border-radius: 8px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .thumbnail-content {
+            text-align: center;
+            color: #fafafa;
+            font-weight: 800;
+            font-size: 24px;
+            letter-spacing: 3px;
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .video-caption {
+            font-size: 13px;
+            color: #fafafa;
+            text-align: center;
+            padding: 0 20px;
+            line-height: 1.3;
+        }
+
+        .video-date {
+            font-size: 12px;
+            color: #a8a8a8;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: space-around;
+            padding: 20px 8px;
+            gap: 4px;
+        }
+
+        .metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+            flex: 1;
+        }
+
         .metric svg {
             width: 24px;
             height: 24px;
+            color: #fafafa;
         }
 
         .metric-value {
             font-size: 14px;
             font-weight: 600;
-            color: #f5f5f5;
+            color: #fafafa;
         }
 
         .section {
+            padding: 0;
+            background: #0c0f14;
+        }
+
+        .section-content {
             padding: 20px 16px;
-            border-bottom: 8px solid #121212;
+        }
+
+        .section-divider {
+            height: 5px;
+            background: #26292e;
+            margin: 0;
         }
 
         .section-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            margin-bottom: 16px;
+            gap: 6px;
+            margin-bottom: 20px;
             font-size: 16px;
-            font-weight: 600;
+            font-weight: 700;
+            color: #fafafa;
         }
 
         .info-icon {
@@ -148,79 +177,31 @@
             justify-content: center;
             font-size: 10px;
             color: #737373;
-            font-weight: 600;
-            font-family: serif;
-        }
-
-        .promo-card {
-            background: #1a1a1a;
-            border-radius: 12px;
-            padding: 16px;
-            display: flex;
-            gap: 12px;
-            align-items: flex-start;
-            margin-bottom: 16px;
-        }
-
-        .promo-icon {
-            width: 40px;
-            height: 40px;
-            background: #2a2a2a;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            flex-shrink: 0;
-        }
-
-        .promo-icon svg {
-            width: 20px;
-            height: 20px;
-        }
-
-        .promo-content {
-            flex: 1;
-        }
-
-        .promo-title {
-            font-size: 14px;
-            font-weight: 600;
-            margin-bottom: 4px;
-            line-height: 1.3;
-        }
-
-        .promo-text {
-            font-size: 13px;
-            color: #a8a8a8;
-            line-height: 1.4;
-            margin-bottom: 8px;
-        }
-
-        .promo-link {
-            font-size: 13px;
-            color: #0095f6;
-            font-weight: 600;
+            font-weight: 700;
+            font-family: Georgia, serif;
+            font-style: italic;
         }
 
         .stat-row {
             display: flex;
             justify-content: space-between;
-            padding: 14px 0;
+            padding: 13px 0;
             font-size: 15px;
-            border-bottom: 0.5px solid #262626;
+            align-items: center;
         }
 
-        .stat-row:last-child {
+        .stat-row:not(:last-child) {
             border-bottom: none;
         }
 
         .stat-label {
-            color: #f5f5f5;
+            color: #fafafa;
+            font-weight: 400;
         }
 
         .stat-value {
-            font-weight: 600;
-            color: #f5f5f5;
+            font-weight: 400;
+            color: #fafafa;
         }
 
         .views-section {
@@ -228,90 +209,211 @@
         }
 
         .views-circle {
-            width: 200px;
-            height: 200px;
-            margin: 20px auto;
+            width: 240px;
+            height: 240px;
+            margin: 24px auto 28px;
             position: relative;
         }
 
-        .circle-bg {
+        .circle-svg {
             width: 100%;
             height: 100%;
-            border-radius: 50%;
-            background: conic-gradient(#8b5cf6 0deg, #8b5cf6 2deg, #262626 2deg);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            position: relative;
+            transform: rotate(-90deg);
         }
 
-        .circle-inner {
-            width: 85%;
-            height: 85%;
-            background: #000;
-            border-radius: 50%;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+        .circle-bg-path {
+            fill: none;
+            stroke: #262626;
+            stroke-width: 20;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke-width: 20;
+            stroke-linecap: round;
+        }
+
+        .circle-blue {
+            stroke: #8a3ee8;
+        }
+
+        .circle-pink {
+            stroke: #d72bcd;
+        }
+
+        .circle-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
         }
 
         .circle-label {
-            font-size: 12px;
+            font-size: 13px;
             color: #a8a8a8;
             margin-bottom: 4px;
+            font-weight: 400;
         }
 
         .circle-value {
-            font-size: 32px;
+            font-size: 36px;
             font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #fafafa;
         }
 
         .audience-breakdown {
-            margin-top: 20px;
+            margin-top: 0;
+        }
+
+        .audience-divider {
+            height: 2px;
+            background: #26292e;
+            margin: 12px 0 0 0;
+            width: 100%;
         }
 
         .audience-item {
             display: flex;
             justify-content: space-between;
-            padding: 10px 0;
-            font-size: 14px;
+            padding: 12px 0;
+            font-size: 15px;
+            align-items: center;
+        }
+
+        .audience-item:not(:last-child) {
+            border-bottom: none;
         }
 
         .audience-label {
             display: flex;
             align-items: center;
             gap: 10px;
-            color: #f5f5f5;
+            color: #fafafa;
+            font-weight: 400;
         }
 
         .audience-value {
-            color: #f5f5f5;
-            font-weight: 500;
+            color: #fafafa;
+            font-weight: 400;
         }
 
         .audience-dot {
             width: 10px;
             height: 10px;
             border-radius: 50%;
+            flex-shrink: 0;
         }
 
-        .dot-purple { background: #8b5cf6; }
-        .dot-gray { background: #3a3a3a; }
+        .dot-blue { background: #8a3ee8; }
+        .dot-pink { background: #d72bcd; }
 
-        .chart-section {
-            margin-top: 20px;
+        .top-sources {
+            margin-top: 28px;
         }
 
-        .chart-tabs {
+        .source-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fafafa;
+        }
+
+        .source-item {
+            margin-bottom: 24px;
+        }
+
+        .source-label {
             display: flex;
-            gap: 8px;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 15px;
+        }
+
+        .source-name {
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .source-percentage {
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .source-bar {
+            width: 100%;
+            height: 6px;
+            background: #262626;
+            border-radius: 3px;
+            overflow: hidden;
+        }
+
+        .source-bar-fill {
+            height: 100%;
+            border-radius: 3px;
+        }
+
+        .bar-pink {
+            background: #d72bcd;
+        }
+
+        .bar-gray {
+            background: #262626;
+        }
+
+        .accounts-reached {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 15px;
+            margin-top: 4px;
+        }
+
+        .watch-time-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
             margin-bottom: 20px;
         }
 
-        .chart-tab {
-            padding: 8px 16px;
+        .watch-time-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 16px;
+            font-weight: 700;
+            color: #fafafa;
+        }
+
+        .watch-time-value {
+            font-size: 15px;
+            font-weight: 400;
+            color: #fafafa;
+        }
+
+        .view-rate-section {
+            margin-top: 28px;
+        }
+
+        .view-rate-title {
+            font-size: 15px;
+            font-weight: 400;
+            margin-bottom: 14px;
+            color: #fafafa;
+        }
+
+        .tab-buttons {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+
+        .tab-btn {
+            padding: 7px 14px;
             background: #262626;
+            border: none;
             border-radius: 8px;
             font-size: 13px;
             color: #a8a8a8;
@@ -319,86 +421,128 @@
             cursor: pointer;
         }
 
-        .chart-tab.active {
-            background: #f5f5f5;
-            color: #000;
+        .tab-btn.active {
+            background: #fafafa;
+            color: #0c0f14;
         }
 
-        .chart {
-            height: 200px;
-            position: relative;
-            margin-top: 30px;
-        }
-
-        .chart-grid {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-        }
-
-        .grid-line {
-            height: 1px;
+        .view-rate-bar {
+            width: 100%;
+            height: 6px;
             background: #262626;
+            border-radius: 3px;
+            overflow: hidden;
+            margin-bottom: 12px;
         }
 
-        .chart-labels {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 12px;
-            font-size: 12px;
-            color: #737373;
+        .view-rate-fill {
+            height: 100%;
+            background: #d72bcd;
+            border-radius: 3px;
+            width: 100%;
         }
 
-        .legend {
-            display: flex;
-            gap: 20px;
-            margin-top: 20px;
-            font-size: 13px;
-        }
-
-        .legend-item {
+        .view-rate-legend {
             display: flex;
             align-items: center;
             gap: 8px;
-            color: #f5f5f5;
+            font-size: 14px;
         }
 
-        .legend-line {
+        .legend-dot {
+            width: 10px;
+            height: 10px;
+            background: #d72bcd;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .legend-text {
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .legend-percentage {
+            margin-left: auto;
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .interactions-section {
+            text-align: center;
+        }
+
+        .interaction-details {
+            margin-top: 0;
+            text-align: left;
+        }
+
+        .interaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+
+        .interaction-item:not(:last-child) {
+            border-bottom: none;
+        }
+
+
+        .ad-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 20px;
+            color: #fafafa;
+        }
+
+        .boost-button {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 0;
+            background-color: transparent;
+            border: none;
+            cursor: pointer;
+            width: 100%;
+            transition: background-color 0.2s;
+        }
+
+        .boost-button:hover {
+            background-color: #1a1a1a;
+        }
+
+        .boost-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .boost-icon {
             width: 24px;
-            height: 3px;
-            border-radius: 2px;
+            height: 24px;
+            display: flex;
+            align-items: center;
         }
 
-        .line-purple { background: #8b5cf6; }
-        .line-pink { 
-            background: linear-gradient(90deg, #ec4899 40%, transparent 40%, transparent 60%, #ec4899 60%);
-            background-size: 8px 3px;
-        }
-
-        svg {
+        .boost-icon svg {
             width: 100%;
             height: 100%;
-        }
-
-        .chart-path {
+            stroke: #fafafa;
+            stroke-width: 2;
             fill: none;
-            stroke-width: 3;
-            stroke-linecap: round;
-            stroke-linejoin: round;
         }
 
-        .path-purple {
-            stroke: #8b5cf6;
+        .boost-text {
+            font-size: 15px;
+            font-weight: 400;
+            color: #fafafa;
         }
 
-        .path-pink {
-            stroke: #ec4899;
-            stroke-dasharray: 5, 5;
+        .arrow-icon {
+            color: #a8a8a8;
+            font-size: 32px;
+            font-weight: 300;
         }
     </style>
 </head>
@@ -410,21 +554,25 @@
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
                 </svg>
             </div>
-            <div class="header-title">Статистика видео Reels</div>
+            <div class="header-title">Reel insights</div>
         </div>
-        <div class="stats-icon">
-            <svg fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/>
+        <div class="menu-btn">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="5" r="1.5"/>
+                <circle cx="12" cy="12" r="1.5"/>
+                <circle cx="12" cy="19" r="1.5"/>
             </svg>
         </div>
     </div>
 
     <div class="video-preview">
         <div class="video-thumbnail">
-            <div class="video-img"></div>
+            <div class="thumbnail-content">
+                ONLINE<br>RAZER
+            </div>
         </div>
-        <div class="video-caption">Ever have one of those days when your brain just won...</div>
-        <div class="video-date">10 октября · Продолжительность 0:37</div>
+        <div class="video-caption">Follow @lack...</div>
+        <div class="video-date">November 21 · Duration 1:00</div>
     </div>
 
     <div class="metrics">
@@ -432,140 +580,264 @@
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
             </svg>
-            <div class="metric-value">62</div>
+            <div class="metric-value">448</div>
         </div>
         <div class="metric">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M20 2H4c-1.1 0-2 .9-2 2v18l4-4h14c1.1 0 2-.9 2-2V4c0-1.1-.9-2-2-2zm0 14H6l-2 2V4h16v12z"/>
             </svg>
-            <div class="metric-value">10</div>
+            <div class="metric-value">21</div>
         </div>
         <div class="metric">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M18 16.08c-.76 0-1.44.3-1.96.77L8.91 12.7c.05-.23.09-.46.09-.7s-.04-.47-.09-.7l7.05-4.11c.54.5 1.25.81 2.04.81 1.66 0 3-1.34 3-3s-1.34-3-3-3-3 1.34-3 3c0 .24.04.47.09.7L8.04 9.81C7.5 9.31 6.79 9 6 9c-1.66 0-3 1.34-3 3s1.34 3 3 3c.79 0 1.5-.31 2.04-.81l7.12 4.16c-.05.21-.08.43-.08.65 0 1.61 1.31 2.92 2.92 2.92s2.92-1.31 2.92-2.92-1.31-2.92-2.92-2.92z"/>
             </svg>
-            <div class="metric-value">74</div>
+            <div class="metric-value">508</div>
         </div>
         <div class="metric">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M7 7h10v3l4-4-4-4v3H5v6h2V7zm10 10H7v-3l-4 4 4 4v-3h12v-6h-2v4z"/>
             </svg>
-            <div class="metric-value">0</div>
+            <div class="metric-value">1</div>
         </div>
         <div class="metric">
             <svg viewBox="0 0 24 24" fill="currentColor">
                 <path d="M17 3H7c-1.1 0-2 .9-2 2v16l7-3 7 3V5c0-1.1-.9-2-2-2zm0 15l-5-2.18L7 18V5h10v13z"/>
             </svg>
-            <div class="metric-value">21</div>
+            <div class="metric-value">680</div>
         </div>
     </div>
 
+    <div class="section-divider"></div>
+
     <div class="section">
-        <div class="section-header">
-            <span>Overview</span>
-            <div class="info-icon">i</div>
+        <div class="section-content">
+            <div class="section-header">
+                <span>Overview</span>
+                <div class="info-icon">i</div>
+            </div>
+            <div>
+                <div class="stat-row">
+                    <div class="stat-label">Views</div>
+                    <div class="stat-value">26,635</div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-label">Watch time</div>
+                    <div class="stat-value">1d 4h 7m 17s</div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-label">Interactions</div>
+                    <div class="stat-value">1,657</div>
+                </div>
+                <div class="stat-row">
+                    <div class="stat-label">Profile activity</div>
+                    <div class="stat-value">0</div>
+                </div>
+            </div>
         </div>
-        <div class="promo-card">
-            <div class="promo-icon">
-                <svg viewBox="0 0 24 24" fill="currentColor">
-                    <path d="M19.14 12.94c.04-.3.06-.61.06-.94 0-.32-.02-.64-.07-.94l2.03-1.58c.18-.14.23-.41.12-.61l-1.92-3.32c-.12-.22-.37-.29-.59-.22l-2.39.96c-.5-.38-1.03-.7-1.62-.94L14.4 2.81c-.04-.24-.24-.41-.48-.41h-3.84c-.24 0-.43.17-.47.41l-.36 2.54c-.59.24-1.13.57-1.62.94l-2.39-.96c-.22-.08-.47 0-.59.22L2.74 8.87c-.12.21-.08.47.12.61l2.03 1.58c-.05.3-.09.63-.09.94s.02.64.07.94l-2.03 1.58c-.18.14-.23.41-.12.61l1.92 3.32c.12.22.37.29.59.22l2.39-.96c.5.38 1.03.7 1.62.94l.36 2.54c.05.24.24.41.48.41h3.84c.24 0 .44-.17.47-.41l.36-2.54c.59-.24 1.13-.56 1.62-.94l2.39.96c.22.08.47 0 .59-.22l1.92-3.32c.12-.22.07-.47-.12-.61l-2.01-1.58zM12 15.6c-1.98 0-3.6-1.62-3.6-3.6s1.62-3.6 3.6-3.6 3.6 1.62 3.6 3.6-1.62 3.6-3.6 3.6z"/>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section">
+        <div class="section-content views-section">
+            <div class="section-header">
+                <span>Views</span>
+                <div class="info-icon">i</div>
+            </div>
+            <div class="views-circle">
+                <svg class="circle-svg" viewBox="0 0 200 200">
+                    <circle class="circle-bg-path" cx="100" cy="100" r="80"/>
+                    <circle class="circle-progress circle-pink" cx="100" cy="100" r="80" 
+                        stroke-dasharray="502.65" stroke-dashoffset="251.33"/>
+                    <circle class="circle-progress circle-blue" cx="100" cy="100" r="80" 
+                        stroke-dasharray="502.65" stroke-dashoffset="0"/>
                 </svg>
+                <div class="circle-content">
+                    <div class="circle-label">Views</div>
+                    <div class="circle-value">26,635</div>
+                </div>
             </div>
-            <div class="promo-content">
-                <div class="promo-title">Get more views for your reel with Meta Verified</div>
-                <div class="promo-text">Subscribers get more reels views on average.</div>
-                <div class="promo-link">Sign up now</div>
+            <div class="audience-breakdown">
+                <div class="audience-item">
+                    <div class="audience-label">
+                        <div class="audience-dot dot-blue"></div>
+                        <span>Followers</span>
+                    </div>
+                    <div class="audience-value">50%</div>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-label">
+                        <div class="audience-dot dot-pink"></div>
+                        <span>Non-followers</span>
+                    </div>
+                    <div class="audience-value">50%</div>
+                </div>
+                <div class="audience-divider"></div>
+            </div>
+
+            <div class="top-sources">
+                <div class="source-title">Top sources of views</div>
+                
+                <div class="source-item">
+                    <div class="source-label">
+                        <span class="source-name">Profile</span>
+                        <span class="source-percentage">99.8%</span>
+                    </div>
+                    <div class="source-bar">
+                        <div class="source-bar-fill bar-pink" style="width: 99.8%"></div>
+                    </div>
+                </div>
+
+                <div class="source-item">
+                    <div class="source-label">
+                        <span class="source-name">Feed</span>
+                        <span class="source-percentage">0.1%</span>
+                    </div>
+                    <div class="source-bar">
+                        <div class="source-bar-fill bar-gray" style="width: 5%"></div>
+                    </div>
+                </div>
+                <div class="audience-divider"></div>
+
+                <div class="accounts-reached">
+                    <span class="stat-label">Accounts reached</span>
+                    <span class="stat-value">524</span>
+                </div>
             </div>
         </div>
-        <div>
-            <div class="stat-row">
-                <div class="stat-label">Views</div>
-                <div class="stat-value">3,382</div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section">
+        <div class="section-content">
+            <div class="watch-time-header">
+                <div class="watch-time-title">
+                    <span>Watch time</span>
+                    <div class="info-icon">i</div>
+                </div>
+                <div class="watch-time-value">1d 4h 7m 17s</div>
             </div>
             <div class="stat-row">
-                <div class="stat-label">Watch time</div>
-                <div class="stat-value">3h 34m 36s</div>
+                <div class="stat-label">Average watch time</div>
+                <div class="stat-value">18sec</div>
+            </div>
+            <div class="audience-divider"></div>
+
+            <div class="view-rate-section">
+                <div class="view-rate-title">View rate past first 3 seconds</div>
+                <div class="tab-buttons">
+                    <button class="tab-btn active">All</button>
+                    <button class="tab-btn">Followers</button>
+                    <button class="tab-btn">Non-followers</button>
+                </div>
+                <div class="view-rate-bar">
+                    <div class="view-rate-fill"></div>
+                </div>
+                <div class="view-rate-legend">
+                    <div class="legend-dot"></div>
+                    <span class="legend-text">This reel</span>
+                    <span class="legend-percentage">99.9%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section">
+        <div class="section-content interactions-section">
+            <div class="section-header">
+                <span>Interactions</span>
+                <div class="info-icon">i</div>
+            </div>
+            <div class="views-circle">
+                <svg class="circle-svg" viewBox="0 0 200 200">
+                    <circle class="circle-bg-path" cx="100" cy="100" r="80"/>
+                    <circle class="circle-progress circle-pink" cx="100" cy="100" r="80" 
+                        stroke-dasharray="502.65" stroke-dashoffset="251.33"/>
+                    <circle class="circle-progress circle-blue" cx="100" cy="100" r="80" 
+                        stroke-dasharray="502.65" stroke-dashoffset="0"/>
+                </svg>
+                <div class="circle-content">
+                    <div class="circle-label">Interactions</div>
+                    <div class="circle-value">1,657</div>
+                </div>
+            </div>
+            <div class="audience-breakdown">
+                <div class="audience-item">
+                    <div class="audience-label">
+                        <div class="audience-dot dot-blue"></div>
+                        <span>Followers</span>
+                    </div>
+                    <div class="audience-value">50%</div>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-label">
+                        <div class="audience-dot dot-pink"></div>
+                        <span>Non-followers</span>
+                    </div>
+                    <div class="audience-value">50%</div>
+                </div>
+                <div class="audience-divider"></div>
+            </div>
+
+            <div class="interaction-details">
+                <div class="interaction-item">
+                    <div class="stat-label">Saves</div>
+                    <div class="stat-value">680</div>
+                </div>
+                <div class="interaction-item">
+                    <div class="stat-label">Shares</div>
+                    <div class="stat-value">508</div>
+                </div>
+                <div class="interaction-item">
+                    <div class="stat-label">Likes</div>
+                    <div class="stat-value">448</div>
+                </div>
+                <div class="interaction-item">
+                    <div class="stat-label">Comments</div>
+                    <div class="stat-value">21</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section">
+        <div class="section-content">
+            <div class="section-header">
+                <span>Profile activity</span>
+                <div class="info-icon">i</div>
             </div>
             <div class="stat-row">
-                <div class="stat-label">Interactions</div>
-                <div class="stat-value">117</div>
-            </div>
-            <div class="stat-row">
-                <div class="stat-label">Profile activity</div>
+                <div class="stat-label">Follows</div>
                 <div class="stat-value">0</div>
             </div>
         </div>
     </div>
 
-    <div class="section views-section">
-        <div class="section-header">
-            <span>Views</span>
-            <div class="info-icon">i</div>
-        </div>
-        <div class="views-circle">
-            <div class="circle-bg">
-                <div class="circle-inner">
-                    <div class="circle-label">Views</div>
-                    <div class="circle-value">3,382</div>
-                </div>
-            </div>
-        </div>
-        <div class="audience-breakdown">
-            <div class="audience-item">
-                <div class="audience-label">
-                    <div class="audience-dot dot-purple"></div>
-                    <span>Followers</span>
-                </div>
-                <div class="audience-value">0.4%</div>
-            </div>
-            <div class="audience-item">
-                <div class="audience-label">
-                    <div class="audience-dot dot-gray"></div>
-                    <span>Non-followers</span>
-                </div>
-                <div class="audience-value">99.6%</div>
-            </div>
-        </div>
-    </div>
+    <div class="section-divider"></div>
 
     <div class="section">
-        <div class="section-header">
-            <span>Views over time</span>
-        </div>
-        <div class="chart-tabs">
-            <div class="chart-tab active">All</div>
-            <div class="chart-tab">Followers</div>
-            <div class="chart-tab">Non-followers</div>
-        </div>
-        <div class="chart">
-            <div class="chart-grid">
-                <div class="grid-line"></div>
-                <div class="grid-line"></div>
-                <div class="grid-line"></div>
-                <div class="grid-line"></div>
-            </div>
-            <svg class="chart-line" viewBox="0 0 300 200" preserveAspectRatio="none">
-                <path class="chart-path path-purple" d="M 0 180 Q 75 160, 150 120 T 300 40" />
-                <path class="chart-path path-pink" d="M 0 190 Q 75 170, 150 140 T 300 80" />
-            </svg>
-        </div>
-        <div class="chart-labels">
-            <span>0</span>
-            <span>12h</span>
-            <span>24h</span>
-        </div>
-        <div class="legend">
-            <div class="legend-item">
-                <div class="legend-line line-purple"></div>
-                <span>This reel</span>
-            </div>
-            <div class="legend-item">
-                <div class="legend-line line-pink"></div>
-                <span>Your typical reel views</span>
-            </div>
+        <div class="section-content ad-section">
+            <h2 class="ad-title">Ad</h2>
+            
+            <button class="boost-button">
+                <div class="boost-left">
+                    <div class="boost-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="16 7 22 7 22 13" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="boost-text">Boost this Reel</span>
+                </div>
+                <span class="arrow-icon">›</span>
+            </button>
         </div>
     </div>
-
-    <div style="height: 40px;"></div>
 </body>
 </html>
