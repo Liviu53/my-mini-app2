@@ -224,12 +224,12 @@
         .circle-bg-path {
             fill: none;
             stroke: #262626;
-            stroke-width: 20;
+            stroke-width: 10;
         }
 
         .circle-progress {
             fill: none;
-            stroke-width: 20;
+            stroke-width: 10;
             stroke-linecap: round;
         }
 
@@ -496,20 +496,12 @@
             color: #fafafa;
         }
 
-        .boost-button {
+        .boost-row {
             display: flex;
             justify-content: space-between;
             align-items: center;
             padding: 13px 0;
-            background-color: transparent;
-            border: none;
-            cursor: pointer;
             width: 100%;
-            transition: background-color 0.2s;
-        }
-
-        .boost-button:hover {
-            background-color: #1a1a1a;
         }
 
         .boost-left {
@@ -825,7 +817,7 @@
         <div class="section-content ad-section">
             <h2 class="ad-title">Ad</h2>
             
-            <button class="boost-button">
+            <div class="boost-row">
                 <div class="boost-left">
                     <div class="boost-icon">
                         <svg viewBox="0 0 24 24">
@@ -836,7 +828,7 @@
                     <span class="boost-text">Boost this Reel</span>
                 </div>
                 <span class="arrow-icon">›</span>
-            </button>
+            </div>
         </div>
     </div>
 </body>
