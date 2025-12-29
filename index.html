@@ -21,7 +21,7 @@
             overflow-x: hidden;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            padding-bottom: 60px;
+            padding-bottom: 0;
         }
 
         .header {
@@ -490,13 +490,17 @@
 
 
         .ad-section {
+            padding-bottom: 0 !important;
+        }
+        
+        .section:last-child .section-content {
             padding-bottom: 0;
         }
 
         .ad-title {
             font-size: 16px;
             font-weight: 700;
-            margin-bottom: 20px;
+            margin-bottom: 10px;
             color: #fafafa;
         }
 
