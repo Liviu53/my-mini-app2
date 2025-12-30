@@ -223,7 +223,6 @@
         .circle-svg {
             width: 100%;
             height: 100%;
-            transform: rotate(-90deg);
         }
 
         .circle-bg-path {
@@ -236,6 +235,7 @@
             fill: none;
             stroke-width: 10;
             stroke-linecap: round;
+            stroke-linejoin: round;
         }
 
         .circle-blue {
@@ -665,10 +665,8 @@
             <div class="views-circle">
                 <svg class="circle-svg" viewBox="0 0 200 200">
                     <circle class="circle-bg-path" cx="100" cy="100" r="80"/>
-                    <circle class="circle-progress circle-blue" cx="100" cy="100" r="80" 
-                        stroke-dasharray="251.33 251.33" stroke-dashoffset="251.33"/>
-                    <circle class="circle-progress circle-pink" cx="100" cy="100" r="80" 
-                        stroke-dasharray="251.33 251.33" stroke-dashoffset="0"/>
+                    <path id="views-blue" class="circle-progress circle-blue"/>
+                    <path id="views-pink" class="circle-progress circle-pink"/>
                 </svg>
                 <div class="circle-content">
                     <div class="circle-label">Views</div>
@@ -812,10 +810,8 @@
             <div class="views-circle">
                 <svg class="circle-svg" viewBox="0 0 200 200">
                     <circle class="circle-bg-path" cx="100" cy="100" r="80"/>
-                    <circle class="circle-progress circle-blue" cx="100" cy="100" r="80" 
-                        stroke-dasharray="251.33 251.33" stroke-dashoffset="251.33"/>
-                    <circle class="circle-progress circle-pink" cx="100" cy="100" r="80" 
-                        stroke-dasharray="251.33 251.33" stroke-dashoffset="0"/>
+                    <path id="interactions-blue" class="circle-progress circle-blue"/>
+                    <path id="interactions-pink" class="circle-progress circle-pink"/>
                 </svg>
                 <div class="circle-content">
                     <div class="circle-label">Interactions</div>
@@ -896,5 +892,74 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const cx = 100;
+        const cy = 100;
+        const r = 80;
+
+        // Утилита: полярные → декартовы
+        function polar(cx, cy, r, angle) {
+            const rad = (angle - 90) * Math.PI / 180;
+            return {
+                x: cx + r * Math.cos(rad),
+                y: cy + r * Math.sin(rad)
+            };
+        }
+
+        // Дуга SVG
+        function arcPath(cx, cy, r, startAngle, endAngle) {
+            const start = polar(cx, cy, r, startAngle);
+            const end = polar(cx, cy, r, endAngle);
+            const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+
+            return `
+                M ${start.x} ${start.y}
+                A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y}
+            `;
+        }
+
+        function updateChart(blueId, pinkId, bluePercent) {
+            const gapDeg = 10;                 // Размер gap в градусах
+            const totalGap = gapDeg * 2;
+
+            const usable = 360 - totalGap;
+
+            const blueDeg = usable * (bluePercent / 100);
+            const pinkDeg = usable - blueDeg;
+
+            let angle = 0;
+
+            // GAP (начальный)
+            angle += gapDeg;
+
+            // BLUE
+            const blueStart = angle;
+            const blueEnd = angle + blueDeg;
+            angle = blueEnd;
+
+            // GAP
+            angle += gapDeg;
+
+            // PINK
+            const pinkStart = angle;
+            const pinkEnd = angle + pinkDeg;
+
+            document.getElementById(blueId)
+                .setAttribute('d', arcPath(cx, cy, r, blueStart, blueEnd));
+
+            document.getElementById(pinkId)
+                .setAttribute('d', arcPath(cx, cy, r, pinkStart, pinkEnd));
+        }
+
+        // Инициализация кругов при загрузке
+        window.addEventListener('DOMContentLoaded', () => {
+            // Views: 50% синий (non-followers), 50% розовый (followers)
+            updateChart('views-blue', 'views-pink', 50);
+            
+            // Interactions: 50% синий (non-followers), 50% розовый (followers)
+            updateChart('interactions-blue', 'interactions-pink', 50);
+        });
+    </script>
 </body>
 </html>
