@@ -331,7 +331,7 @@
         }
 
         .source-item {
-            margin-bottom: 14px;
+            margin-bottom: 18px;
         }
 
         .source-label {
@@ -949,32 +949,32 @@
             // GAP (начальный)
             angle += gapDeg;
 
-            // BLUE
-            const blueStart = angle;
-            const blueEnd = angle + blueDeg;
-            angle = blueEnd;
+            // PINK (теперь первый)
+            const pinkStart = angle;
+            const pinkEnd = angle + pinkDeg;
+            angle = pinkEnd;
 
             // GAP
             angle += gapDeg;
 
-            // PINK
-            const pinkStart = angle;
-            const pinkEnd = angle + pinkDeg;
-
-            document.getElementById(blueId)
-                .setAttribute('d', arcPath(cx, cy, r, blueStart, blueEnd));
+            // BLUE (теперь второй)
+            const blueStart = angle;
+            const blueEnd = angle + blueDeg;
 
             document.getElementById(pinkId)
                 .setAttribute('d', arcPath(cx, cy, r, pinkStart, pinkEnd));
+
+            document.getElementById(blueId)
+                .setAttribute('d', arcPath(cx, cy, r, blueStart, blueEnd));
         }
 
         // Инициализация кругов при загрузке
         window.addEventListener('DOMContentLoaded', () => {
             // Views: 50% синий (non-followers), 50% розовый (followers)
-            updateChart('views-blue', 'views-pink', 60);
+            updateChart('views-blue', 'views-pink', 10);
             
             // Interactions: 50% синий (non-followers), 50% розовый (followers)
-            updateChart('interactions-blue', 'interactions-pink', 40);
+            updateChart('interactions-blue', 'interactions-pink', 90);
         });
     </script>
 </body>
