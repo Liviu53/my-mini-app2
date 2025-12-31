@@ -422,26 +422,27 @@
             color: #fafafa;
         }
 
-        .tab-buttons {
+        .chips {
             display: flex;
             gap: 8px;
             margin-bottom: 18px;
         }
 
-        .tab-btn {
-            padding: 7px 14px;
-            background: #262626;
-            border: none;
-            border-radius: 8px;
-            font-size: 13px;
-            color: #a8a8a8;
-            font-weight: 600;
+        .chip {
+            padding: 8px 18px;
+            font-size: 14px;
+            color: #e6e6e6;
+            background: transparent;
+            border: 1px solid #3a3a3a;
+            border-radius: 999px;
+            font-weight: 400;
             cursor: pointer;
         }
 
-        .tab-btn.active {
-            background: #fafafa;
-            color: #0c0f14;
+        .chip.active {
+            background: #3a3a3a;
+            border-color: #3a3a3a;
+            color: #fff;
         }
 
         .view-rate-bar {
@@ -792,10 +793,10 @@
 
             <div class="view-rate-section">
                 <div class="view-rate-title">View rate past first 3 seconds</div>
-                <div class="tab-buttons">
-                    <button class="tab-btn active">All</button>
-                    <button class="tab-btn">Followers</button>
-                    <button class="tab-btn">Non-followers</button>
+                <div class="chips">
+                    <button class="chip active">All</button>
+                    <button class="chip">Followers</button>
+                    <button class="chip">Non-followers</button>
                 </div>
                 <div class="view-rate-bar">
                     <div class="view-rate-fill"></div>
