@@ -12,7 +12,7 @@ const config = {
     
     // Метрики в верхней части (лайки, комментарии и т.д.)
     metrics: {
-        likes: 999,
+        likes: 99999,
         comments: 999,
         shares: 999,
         reposts: 9999,
