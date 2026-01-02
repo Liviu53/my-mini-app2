@@ -33,7 +33,7 @@ const config = {
         chartBluePercent: 70.5,       // Процент синего сегмента в круговой диаграмме (non-followers). Автоматически определяет проценты Followers/Non-followers
         accountsReached: 19999,
         topSources: {
-            profile: 9,    // Процент просмотров из профиля
+            profile: 9.4,    // Процент просмотров из профиля
             feed: 9,       // Процент просмотров из ленты
             reelsTab: 9,   // Процент просмотров из вкладки Reels
             explore: 9,    // Процент просмотров из Explore
