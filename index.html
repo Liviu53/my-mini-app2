@@ -105,6 +105,13 @@
             text-shadow: 0 2px 8px rgba(0,0,0,0.3);
         }
 
+        .thumbnail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
         .video-caption {
             font-size: 12px;
             color: #fafafa;
@@ -375,7 +382,7 @@
         .bar-pink {
             background: #d72bcd;
             border-radius: 2px;
-            box-shadow: inset -2px 0 0 0 #0c0f14;
+            box-shadow: inset -1.5px 0 0 0 #0c0f14;
         }
 
         .bar-gray {
@@ -588,9 +595,7 @@
 
     <div class="video-preview">
         <div class="video-thumbnail">
-            <div class="thumbnail-content">
-                ONLINE<br>RAZER
-            </div>
+            <img src="bazafoto.png" alt="Video thumbnail" class="thumbnail-image">
         </div>
         <div class="video-caption">Follow @lack...</div>
         <div class="video-date">November 21 · Duration 1:00</div>
