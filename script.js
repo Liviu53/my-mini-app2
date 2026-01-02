@@ -12,7 +12,7 @@ const config = {
     
     // Метрики в верхней части (лайки, комментарии и т.д.)
     metrics: {
-        likes: 99999,
+        likes: 999,
         comments: 999,
         shares: 999,
         reposts: 9999,
@@ -33,11 +33,11 @@ const config = {
         chartBluePercent: 70.5,       // Процент синего сегмента в круговой диаграмме (non-followers). Автоматически определяет проценты Followers/Non-followers
         accountsReached: 19999,
         topSources: {
-            profile: 9.4,    // Процент просмотров из профиля
-            feed: 9.6,       // Процент просмотров из ленты
-            reelsTab: 9,   // Процент просмотров из вкладки Reels
-            explore: 9,    // Процент просмотров из Explore
-            search: 9     // Процент просмотров из поиска
+            profile: 9.5,    // Процент просмотров из профиля
+            feed: 1,       // Процент просмотров из ленты
+            reelsTab: 2,   // Процент просмотров из вкладки Reels
+            explore: 3,    // Процент просмотров из Explore
+            search: 50     // Процент просмотров из поиска
         }
     },
     
@@ -52,10 +52,10 @@ const config = {
     interactions: {
         total: 99999,
         chartBluePercent: 63.1,      // Процент синего сегмента в круговой диаграмме (non-followers). Автоматически определяет проценты Followers/Non-followers
-        saves: 1,
+        saves: 4,
         shares: 2,
         likes: 3,
-        comments: 4
+        comments: 1
     },
     
     // Секция Profile Activity
@@ -125,24 +125,46 @@ function updateMetrics() {
             viewsAudienceItems[1].querySelector('.audience-value').textContent = nonFollowersPercent.toFixed(1) + '%';
         }
         
-        // Top sources of views
-        const sourceItems = viewsSection.querySelectorAll('.top-sources .source-item');
-        const sourcePercentages = [
-            config.views.topSources.profile,
-            config.views.topSources.feed,
-            config.views.topSources.reelsTab,
-            config.views.topSources.explore,
-            config.views.topSources.search
-        ];
-        
-        sourceItems.forEach((item, index) => {
-            if (index < sourcePercentages.length) {
-                const fill = item.querySelector('.source-bar-fill');
-                const percentage = item.querySelector('.source-percentage');
-                if (fill) fill.style.width = sourcePercentages[index] + '%';
-                if (percentage) percentage.textContent = sourcePercentages[index] + '%';
-            }
-        });
+        // Top sources of views - сортировка по убыванию процента
+        const topSourcesContainer = viewsSection.querySelector('.top-sources');
+        if (topSourcesContainer) {
+            const sourceItems = Array.from(topSourcesContainer.querySelectorAll('.source-item'));
+            const sourceDataMap = {
+                'Profile': config.views.topSources.profile,
+                'Feed': config.views.topSources.feed,
+                'Reels tab': config.views.topSources.reelsTab,
+                'Explore': config.views.topSources.explore,
+                'Search': config.views.topSources.search
+            };
+            
+            // Сопоставляем элементы с данными
+            const itemsWithData = sourceItems.map(item => {
+                const nameSpan = item.querySelector('.source-name');
+                const name = nameSpan ? nameSpan.textContent.trim() : '';
+                return {
+                    element: item,
+                    name: name,
+                    percentage: sourceDataMap[name] || 0
+                };
+            });
+            
+            // Сортировка по убыванию процента
+            itemsWithData.sort((a, b) => b.percentage - a.percentage);
+            
+            // Обновление значений и перестановка элементов
+            itemsWithData.forEach((itemData) => {
+                const fill = itemData.element.querySelector('.source-bar-fill');
+                const percentage = itemData.element.querySelector('.source-percentage');
+                const nameSpan = itemData.element.querySelector('.source-name');
+                
+                if (fill) fill.style.width = itemData.percentage + '%';
+                if (percentage) percentage.textContent = itemData.percentage + '%';
+                if (nameSpan) nameSpan.textContent = itemData.name;
+                
+                // Переставляем элемент в правильную позицию (appendChild перемещает существующий элемент)
+                topSourcesContainer.appendChild(itemData.element);
+            });
+        }
         
         // Accounts reached
         const accountsReached = viewsSection.querySelector('.accounts-reached .stat-value');
@@ -183,13 +205,42 @@ function updateMetrics() {
             interactionsAudienceItems[1].querySelector('.audience-value').textContent = nonFollowersPercent.toFixed(1) + '%';
         }
         
-        // Детали взаимодействий
-        const interactionDetails = interactionsSection.querySelectorAll('.interaction-details .interaction-item');
-        if (interactionDetails.length >= 4) {
-            interactionDetails[0].querySelector('.stat-value').textContent = formatNumber(config.interactions.saves);
-            interactionDetails[1].querySelector('.stat-value').textContent = formatNumber(config.interactions.shares);
-            interactionDetails[2].querySelector('.stat-value').textContent = formatNumber(config.interactions.likes);
-            interactionDetails[3].querySelector('.stat-value').textContent = formatNumber(config.interactions.comments);
+        // Детали взаимодействий - сортировка по убыванию значения
+        const interactionDetailsContainer = interactionsSection.querySelector('.interaction-details');
+        if (interactionDetailsContainer) {
+            const interactionDetails = Array.from(interactionDetailsContainer.querySelectorAll('.interaction-item'));
+            const interactionDataMap = {
+                'Saves': config.interactions.saves,
+                'Shares': config.interactions.shares,
+                'Likes': config.interactions.likes,
+                'Comments': config.interactions.comments
+            };
+            
+            // Сопоставляем элементы с данными
+            const itemsWithData = interactionDetails.map(item => {
+                const label = item.querySelector('.stat-label');
+                const labelText = label ? label.textContent.trim() : '';
+                return {
+                    element: item,
+                    label: labelText,
+                    value: interactionDataMap[labelText] || 0
+                };
+            });
+            
+            // Сортировка по убыванию значения
+            itemsWithData.sort((a, b) => b.value - a.value);
+            
+            // Обновление значений и перестановка элементов
+            itemsWithData.forEach((itemData) => {
+                const label = itemData.element.querySelector('.stat-label');
+                const value = itemData.element.querySelector('.stat-value');
+                
+                if (label) label.textContent = itemData.label;
+                if (value) value.textContent = formatNumber(itemData.value);
+                
+                // Переставляем элемент в правильную позицию (appendChild перемещает существующий элемент)
+                interactionDetailsContainer.appendChild(itemData.element);
+            });
         }
     }
     
