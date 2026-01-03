@@ -1,0 +1,868 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <title>Views</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html, body {
+            scrollbar-width: none;
+        }
+
+        html::-webkit-scrollbar,
+        body::-webkit-scrollbar {
+            display: none;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+            background: #0c0f14;
+            color: #fafafa;
+            overflow-x: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .header {
+            position: sticky;
+            top: 0;
+            background: #0c0f14;
+            z-index: 100;
+        }
+
+        .header-top {
+            padding: 17px 16px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+        }
+
+        .header-left {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+
+        .back-btn {
+            cursor: pointer;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            color: #fafafa;
+        }
+
+        .back-btn svg {
+            width: 25px;
+            height: 25px;
+        }
+
+        .header-title {
+            font-size: 21px;
+            font-weight: 600;
+            color: #fafafa;
+            margin-left: 18px;
+        }
+
+        .info-btn {
+            cursor: pointer;
+            padding: 0;
+            color: #fafafa;
+        }
+
+        .info-btn svg {
+            width: 22px;
+            height: 22px;
+        }
+
+        .date-section {
+            padding: 16px 16px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid #26292e;
+        }
+
+        .section-divider {
+            height: 5px;
+            background: #26292e;
+            margin: 0;
+            width: 100%;
+        }
+
+        .date-selector {
+            background: #2a2e34;
+            padding: 11px 15px;
+            border-radius: 999px;
+            font-size: 14px;
+            font-weight: 500;
+            color: #fafafa;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        .date-range {
+            font-size: 14px;
+            color: #fafafa;
+            font-weight: 500;
+        }
+
+        .views-circle {
+            width: 265px;
+            height: 265px;
+            margin: 24px auto 28px;
+            position: relative;
+        }
+
+        .circle-svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .circle-bg-path {
+            fill: none;
+            stroke: #1a1d23;
+            stroke-width: 10;
+        }
+
+        .circle-progress {
+            fill: none;
+            stroke-width: 10;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .circle-blue {
+            stroke: #8a3ee8;
+        }
+
+        .circle-pink {
+            stroke: #d72bcd;
+        }
+
+        .circle-content {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            text-align: center;
+        }
+
+        .circle-label {
+            font-size: 12px;
+            color: #a8a8a8;
+            margin-bottom: 4px;
+            font-weight: 400;
+        }
+
+        .circle-value {
+            font-size: 36px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+            color: #fafafa;
+        }
+
+        .section-content {
+            padding: 0 16px 20px;
+        }
+
+        .audience-breakdown {
+            margin-top: 0;
+        }
+
+        .audience-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .audience-label {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .audience-value {
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .audience-dot {
+            width: 6px;
+            height: 6px;
+            border-radius: 50%;
+            flex-shrink: 0;
+        }
+
+        .dot-blue { background: #8a3ee8; }
+        .dot-pink { background: #d72bcd; }
+
+        .audience-divider {
+            height: 1px;
+            background: #26292e;
+            margin: 12px 0 0 0;
+            width: 100%;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .stat-label {
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .stat-value {
+            font-weight: 400;
+            color: #fafafa;
+        }
+
+        .stat-change {
+            font-size: 12px;
+            color: #00d084;
+            margin-left: 8px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin: 28px 0 20px;
+            color: #fafafa;
+        }
+
+        .content-chips {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 24px;
+        }
+
+        .chip {
+            padding: 11px 15px;
+            font-size: 11px;
+            color: #e6e6e6;
+            background: transparent;
+            border: 1px solid #3a3a3a;
+            border-radius: 999px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .chip.active {
+            background: #3a3a3a;
+            border-color: #3a3a3a;
+            color: #fff;
+        }
+
+        .content-item {
+            margin-bottom: 18px;
+        }
+
+        .content-bar {
+            width: 100%;
+            display: flex;
+            align-items: center;
+            gap: 13px;
+            margin-bottom: 4px;
+        }
+
+        .content-name {
+            color: #fafafa;
+            font-weight: 400;
+            font-size: 14px;
+            flex: 1;
+        }
+
+        .content-percentage {
+            color: #fafafa;
+            font-weight: 400;
+            font-size: 14px;
+            flex-shrink: 0;
+        }
+
+        .content-bar-wrapper {
+            width: 100%;
+            height: 8px;
+            background: #262626;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 4px;
+        }
+
+        .content-bar-fill {
+            height: 100%;
+            background: #8a3ee8;
+            border-radius: 2px;
+        }
+
+        .content-legend {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-top: 8px;
+        }
+
+        .top-content-section {
+            margin-top: 28px;
+        }
+
+        .top-content-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .see-all {
+            color: #4d9fff;
+            font-size: 14px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .content-thumbnail {
+            width: 120px;
+            height: 160px;
+            background: linear-gradient(180deg, #3d6b28 0%, #5a8f3d 50%, #3d6b28 100%);
+            border-radius: 10px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: flex-end;
+            justify-content: center;
+            padding: 12px;
+        }
+
+        .content-views {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+        }
+
+        .content-date {
+            text-align: center;
+            font-size: 13px;
+            color: #a8a8a8;
+            margin-top: 8px;
+        }
+
+        .top-content-carousel {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+            padding-bottom: 8px;
+        }
+
+        .top-content-carousel::-webkit-scrollbar {
+            display: none;
+        }
+
+        .top-content-item {
+            flex-shrink: 0;
+            width: calc((100% - 36px) / 4);
+            min-width: 120px;
+        }
+
+        .audience-section {
+            margin-top: 28px;
+        }
+
+        .audience-cards {
+            display: flex;
+            gap: 12px;
+            overflow-x: auto;
+            scrollbar-width: none;
+            -webkit-overflow-scrolling: touch;
+        }
+
+        .audience-cards::-webkit-scrollbar {
+            display: none;
+        }
+
+        .audience-card {
+            background: #1a1d23;
+            border-radius: 12px;
+            padding: 20px;
+            min-width: 280px;
+            flex-shrink: 0;
+        }
+
+        .audience-card-title {
+            font-size: 14px;
+            font-weight: 600;
+            color: #fafafa;
+            margin-bottom: 16px;
+        }
+
+        .audience-card-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 10px 0;
+            font-size: 14px;
+        }
+
+        .audience-card-bar {
+            width: 100%;
+            height: 8px;
+            background: #262626;
+            border-radius: 2px;
+            overflow: hidden;
+            margin-top: 6px;
+        }
+
+        .audience-card-fill {
+            height: 100%;
+            background: #d72bcd;
+            border-radius: 2px;
+        }
+
+        .profile-activity {
+            margin-top: 28px;
+        }
+
+        .profile-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fafafa;
+        }
+
+        .profile-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fafafa;
+        }
+
+        .profile-subtitle {
+            font-size: 12px;
+            color: #a8a8a8;
+            margin-bottom: 16px;
+        }
+
+        .profile-change {
+            color: #00d084;
+        }
+
+        .info-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fafafa;
+            flex-shrink: 0;
+        }
+
+        .info-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <div class="header-left">
+                <div class="back-btn">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" fill="currentColor" viewBox="0 0 16 16" stroke="currentColor" stroke-width="0.5">
+                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
+                    </svg>
+                </div>
+                <div class="header-title">Views</div>
+            </div>
+            <div class="info-btn">
+                <svg fill="currentColor" height="22" role="img" viewBox="0 0 24 24" width="22">
+                    <circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                    <circle cx="11.819" cy="7.709" r="1.25"></circle>
+                    <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line>
+                    <polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+                </svg>
+            </div>
+        </div>
+        <div class="date-section">
+            <div class="date-selector">
+                <span>Last 30 days</span>
+                <span>▼</span>
+            </div>
+            <div class="date-range">Dec 4 - Jan 2</div>
+        </div>
+    </div>
+
+    <div class="section-content">
+        <div class="views-circle">
+            <svg class="circle-svg" viewBox="0 0 200 200">
+                <circle class="circle-bg-path" cx="100" cy="100" r="80"/>
+                <path id="views-pink" class="circle-progress circle-pink"/>
+                <path id="views-blue" class="circle-progress circle-blue"/>
+            </svg>
+            <div class="circle-content">
+                <div class="circle-label">Views</div>
+                <div class="circle-value">8,914</div>
+            </div>
+        </div>
+
+        <div class="audience-breakdown">
+            <div class="audience-item">
+                <div class="audience-label">
+                    <div class="audience-dot dot-pink"></div>
+                    <span>Followers</span>
+                </div>
+                <div class="audience-value">20%</div>
+            </div>
+            <div class="audience-item">
+                <div class="audience-label">
+                    <div class="audience-dot dot-blue"></div>
+                    <span>Non-followers</span>
+                </div>
+                <div class="audience-value">80%</div>
+            </div>
+            <div class="audience-divider"></div>
+        </div>
+
+        <div class="stat-row">
+            <div class="stat-label">Accounts reached</div>
+            <div class="stat-value">
+                585
+                <span class="stat-change">-83.0%</span>
+            </div>
+        </div>
+        <div class="audience-divider"></div>
+
+        <div class="section-title">By content type</div>
+        
+        <div class="content-chips">
+            <button class="chip active">All</button>
+            <button class="chip">Followers</button>
+            <button class="chip">Non-followers</button>
+        </div>
+
+        <div class="content-item">
+            <div class="content-bar">
+                <span class="content-name">Reels</span>
+                <span class="content-percentage">97.1%</span>
+            </div>
+            <div class="content-bar-wrapper">
+                <div class="content-bar-fill" style="width: 97.1%"></div>
+            </div>
+        </div>
+
+        <div class="content-item">
+            <div class="content-bar">
+                <span class="content-name">Posts</span>
+                <span class="content-percentage">2.9%</span>
+            </div>
+            <div class="content-bar-wrapper">
+                <div class="content-bar-fill" style="width: 2.9%"></div>
+            </div>
+            <div class="content-legend">
+                <div class="audience-dot dot-pink"></div>
+                <span class="stat-label">Followers</span>
+                <div class="audience-dot dot-blue" style="margin-left: 8px;"></div>
+                <span class="stat-label">Non-Followers</span>
+            </div>
+            <div class="audience-divider"></div>
+        </div>
+
+        <div class="top-content-section">
+            <div class="top-content-header">
+                <div class="section-title" style="margin: 0;">By top content</div>
+                <div class="see-all">See all</div>
+            </div>
+
+            <div class="top-content-carousel">
+                <div class="top-content-item">
+                    <div class="content-thumbnail">
+                        <div class="content-views">21K</div>
+                    </div>
+                    <div class="content-date">Dec 18</div>
+                </div>
+                <div class="top-content-item">
+                    <div class="content-thumbnail">
+                        <div class="content-views">18K</div>
+                    </div>
+                    <div class="content-date">Dec 17</div>
+                </div>
+                <div class="top-content-item">
+                    <div class="content-thumbnail">
+                        <div class="content-views">15K</div>
+                    </div>
+                    <div class="content-date">Dec 16</div>
+                </div>
+                <div class="top-content-item">
+                    <div class="content-thumbnail">
+                        <div class="content-views">12K</div>
+                    </div>
+                    <div class="content-date">Dec 15</div>
+                </div>
+                <div class="top-content-item">
+                    <div class="content-thumbnail">
+                        <div class="content-views">10K</div>
+                    </div>
+                    <div class="content-date">Dec 14</div>
+                </div>
+                <div class="top-content-item">
+                    <div class="content-thumbnail">
+                        <div class="content-views">8K</div>
+                    </div>
+                    <div class="content-date">Dec 13</div>
+                </div>
+                <div class="top-content-item">
+                    <div class="content-thumbnail">
+                        <div class="content-views">6K</div>
+                    </div>
+                    <div class="content-date">Dec 12</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section-content">
+        <div class="audience-section">
+            <div class="section-title">Audience</div>
+            
+            <div class="audience-cards">
+                <div class="audience-card">
+                    <div class="audience-card-title">Top cities</div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">London</span>
+                        <span class="stat-value">11.8%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 11.8%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">Montreal</span>
+                        <span class="stat-value">1.5%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 1.5%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">Toronto</span>
+                        <span class="stat-value">1.5%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 1.5%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">Istanbul</span>
+                        <span class="stat-value">1.3%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 1.3%"></div>
+                    </div>
+                </div>
+
+                <div class="audience-card">
+                    <div class="audience-card-title">Top countries</div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">United States</span>
+                        <span class="stat-value">21.2%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 21.2%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">United Kingdom</span>
+                        <span class="stat-value">17.6%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 17.6%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">Canada</span>
+                        <span class="stat-value">9.0%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 9.0%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">India</span>
+                        <span class="stat-value">8.4%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 8.4%"></div>
+                    </div>
+                </div>
+
+                <div class="audience-card">
+                    <div class="audience-card-title">Top age ranges</div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">25-34</span>
+                        <span class="stat-value">48.8%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 48.8%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">18-24</span>
+                        <span class="stat-value">37.1%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 37.1%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">35-44</span>
+                        <span class="stat-value">9.7%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 9.7%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">45-54</span>
+                        <span class="stat-value">2.3%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 2.3%"></div>
+                    </div>
+                </div>
+
+                <div class="audience-card">
+                    <div class="audience-card-title">Gender</div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">Men</span>
+                        <span class="stat-value">92.4%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 92.4%"></div>
+                    </div>
+                    <div class="audience-card-item">
+                        <span class="stat-label">Women</span>
+                        <span class="stat-value">7.6%</span>
+                    </div>
+                    <div class="audience-card-bar">
+                        <div class="audience-card-fill" style="width: 7.6%"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section-content">
+        <div class="profile-activity">
+            <div class="profile-header">
+                <div class="profile-title">
+                    <span>Profile activity</span>
+                    <div class="info-icon">
+                        <svg fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16">
+                            <circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
+                            <circle cx="11.819" cy="7.709" r="1.25"></circle>
+                            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line>
+                            <polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+                        </svg>
+                    </div>
+                </div>
+                <div class="profile-value">25</div>
+            </div>
+            <div class="profile-subtitle">
+                vs Nov 4 - Dec 3 <span class="profile-change">+38.9%</span>
+            </div>
+            
+            <div class="stat-row">
+                <div class="stat-label">Profile visits</div>
+                <div class="stat-value">
+                    25
+                    <span class="stat-change">+38.9%</span>
+                </div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-label">External link taps</div>
+                <div class="stat-value">0</div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const cx = 100;
+        const cy = 100;
+        const r = 80;
+
+        // Утилита: полярные → декартовы
+        function polar(cx, cy, r, angle) {
+            const rad = (angle - 90) * Math.PI / 180;
+            return {
+                x: cx + r * Math.cos(rad),
+                y: cy + r * Math.sin(rad)
+            };
+        }
+
+        // Дуга SVG
+        function arcPath(cx, cy, r, startAngle, endAngle) {
+            const start = polar(cx, cy, r, startAngle);
+            const end = polar(cx, cy, r, endAngle);
+            const largeArc = endAngle - startAngle > 180 ? 1 : 0;
+
+            return `
+                M ${start.x} ${start.y}
+                A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y}
+            `;
+        }
+
+        function updateChart(blueId, pinkId, bluePercent) {
+            const gapDeg = 8;
+            const totalGap = gapDeg * 2;
+            const usable = 360 - totalGap;
+            const blueDeg = usable * (bluePercent / 100);
+            const pinkDeg = usable - blueDeg;
+
+            let angle = 0;
+            angle += gapDeg;
+
+            const pinkStart = angle;
+            const pinkEnd = angle + pinkDeg;
+            angle = pinkEnd;
+            angle += gapDeg;
+
+            const blueStart = angle;
+            const blueEnd = angle + blueDeg;
+
+            const pinkPath = document.getElementById(pinkId);
+            const bluePath = document.getElementById(blueId);
+            
+            if (pinkPath) pinkPath.setAttribute('d', arcPath(cx, cy, r, pinkStart, pinkEnd));
+            if (bluePath) bluePath.setAttribute('d', arcPath(cx, cy, r, blueStart, blueEnd));
+        }
+
+        // Инициализация круга при загрузке
+        window.addEventListener('DOMContentLoaded', () => {
+            // Views: 20% розовый (followers), 80% синий (non-followers)
+            updateChart('views-blue', 'views-pink', 80);
+        });
+    </script>
+</body>
+</html>
