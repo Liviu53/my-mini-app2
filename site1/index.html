@@ -5,7 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
-    <title>Views</title>
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="theme-color" content="#0c0f14">
+    <meta name="msapplication-navbutton-color" content="#0c0f14">
+    <meta name="apple-mobile-web-app-title" content="Reel insights">
+    <title>Reel insights</title>
     <style>
         * {
             margin: 0;
@@ -15,12 +19,12 @@
         }
 
         html, body {
-            scrollbar-width: none;
+            scrollbar-width: none;      /* Firefox */
         }
 
         html::-webkit-scrollbar,
         body::-webkit-scrollbar {
-            display: none;
+            display: none;              /* Chrome / Edge / Safari */
         }
 
         body {
@@ -30,20 +34,18 @@
             overflow-x: hidden;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            padding-bottom: 0;
         }
 
         .header {
             position: sticky;
             top: 0;
             background: #0c0f14;
-            z-index: 100;
-        }
-
-        .header-top {
             padding: 17px 16px;
             display: flex;
             align-items: center;
             justify-content: space-between;
+            z-index: 100;
         }
 
         .header-left {
@@ -72,49 +74,194 @@
             margin-left: 18px;
         }
 
-        .info-btn {
+        .menu-btn {
             cursor: pointer;
             padding: 0;
             color: #fafafa;
+            margin-right: 5px;
         }
 
-        .info-btn svg {
+        .menu-btn svg {
             width: 22px;
             height: 22px;
         }
 
-        .date-section {
-            padding: 16px 16px 20px;
+        .video-preview {
+            padding: 16px 16px 12px;
             display: flex;
-            justify-content: space-between;
+            flex-direction: column;
             align-items: center;
-            border-bottom: 1px solid #26292e;
+            gap: 8px;
+        }
+
+        .video-thumbnail {
+            width: 100px;
+            height: 178px;
+            background: linear-gradient(180deg, #3d6b28 0%, #5a8f3d 50%, #3d6b28 100%);
+            border-radius: 15px;
+            overflow: hidden;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .thumbnail-content {
+            text-align: center;
+            color: #fafafa;
+            font-weight: 800;
+            font-size: 18px;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            line-height: 1.2;
+            text-shadow: 0 2px 8px rgba(0,0,0,0.3);
+        }
+
+        .thumbnail-image {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            border-radius: 15px;
+        }
+
+        .video-caption {
+            font-size: 14px;
+            color: #fafafa;
+            text-align: center;
+            padding: 0 20px;
+            line-height: 1.3;
+            font-weight: 500;
+            margin-bottom: -5px;
+        }
+
+        .video-date {
+            font-size: 13px;
+            color: #a8a8a8;
+            margin-bottom: 12px;
+        }
+
+        .metrics {
+            display: flex;
+            justify-content: space-around;
+            padding: 16px 8px 24px 8px;
+            gap: 4px;
+        }
+
+        .metric {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 6px;
+            flex: 1;
+        }
+
+        .metric svg {
+            width: 20px;
+            height: 20px;
+            color: #fafafa;
+        }
+
+        .metric img {
+            width: 20px;
+            height: 20px;
+        }
+
+        .metric-value {
+            font-size: 14px;
+            font-weight: 400;
+            color: #fafafa;
+        }
+
+        .section {
+            padding: 0;
+            background: #0c0f14;
+        }
+
+        .section-content {
+            padding: 20px 16px;
         }
 
         .section-divider {
             height: 5px;
             background: #26292e;
             margin: 0;
-            width: 100%;
         }
 
-        .date-selector {
-            background: #2a2e34;
-            padding: 11px 15px;
-            border-radius: 999px;
-            font-size: 14px;
-            font-weight: 500;
-            color: #fafafa;
+        .section-header {
             display: flex;
             align-items: center;
-            gap: 8px;
-            cursor: pointer;
+            gap: 6px;
+            margin-top: 15px;
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fafafa;
         }
 
-        .date-range {
-            font-size: 14px;
+        .profile-activity-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .profile-activity-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            font-size: 18px;
+            font-weight: 700;
             color: #fafafa;
-            font-weight: 500;
+            margin-top: 15px;
+        }
+
+        .profile-activity-value {
+            font-size: 18px;
+            font-weight: 700;
+            color: #fafafa;
+            margin-top: 15px;
+        }
+
+        .info-icon {
+            width: 16px;
+            height: 16px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #fafafa;
+            flex-shrink: 0;
+        }
+
+        .info-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .stat-row {
+            display: flex;
+            justify-content: space-between;
+            padding: 13px 0;
+            font-size: 14px;
+            align-items: center;
+        }
+
+        .stat-row:not(:last-child) {
+            border-bottom: none;
+        }
+
+        .stat-label {
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .stat-value {
+            font-weight: 400;
+            color: #fafafa;
+        }
+
+        .views-section {
+            text-align: center;
         }
 
         .views-circle {
@@ -131,7 +278,7 @@
 
         .circle-bg-path {
             fill: none;
-            stroke: #1a1d23;
+            stroke: #0c0f14;
             stroke-width: 10;
         }
 
@@ -172,12 +319,15 @@
             color: #fafafa;
         }
 
-        .section-content {
-            padding: 0 16px 20px;
-        }
-
         .audience-breakdown {
             margin-top: 0;
+        }
+
+        .audience-divider {
+            height: 1px;
+            background: #26292e;
+            margin: 12px 0 0 0;
+            width: 100%;
         }
 
         .audience-item {
@@ -186,6 +336,10 @@
             padding: 12px 0;
             font-size: 14px;
             align-items: center;
+        }
+
+        .audience-item:not(:last-child) {
+            border-bottom: none;
         }
 
         .audience-label {
@@ -211,48 +365,119 @@
         .dot-blue { background: #8a3ee8; }
         .dot-pink { background: #d72bcd; }
 
-        .audience-divider {
-            height: 1px;
-            background: #26292e;
-            margin: 12px 0 0 0;
-            width: 100%;
+        .top-sources {
+            margin-top: 28px;
         }
 
-        .stat-row {
+        .source-title {
+            font-size: 16px;
+            font-weight: 700;
+            margin-bottom: 35px;
+            color: #fafafa;
+            text-align: left;
+        }
+
+        .source-item {
+            margin-bottom: 18px;
+        }
+
+        .source-label {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
+            margin-bottom: 2px;
             font-size: 14px;
+        }
+
+        .source-name {
+            color: #fafafa;
+            font-weight: 400;
+        }
+
+        .source-percentage {
+            color: #fafafa;
+            font-weight: 400;
+            font-size: 14px;
+            flex-shrink: 0;
+            line-height: 1;
+        }
+
+        .source-bar {
+            width: 100%;
+            display: flex;
             align-items: center;
+            gap: 13px;
+        }
+        
+        .source-bar-wrapper {
+            flex: 1;
+            height: 8px;
+            background: #262626;
+            border-radius: 2px;
+            overflow: hidden;
         }
 
-        .stat-label {
-            color: #fafafa;
-            font-weight: 400;
+        .source-bar-fill {
+            height: 100%;
+            border-radius: 3px;
         }
 
-        .stat-value {
-            font-weight: 400;
-            color: #fafafa;
+        .bar-pink {
+            background: #d72bcd;
+            border-radius: 2px;
+            box-shadow: inset -1.5px 0 0 0 #0c0f14;
         }
 
-        .stat-change {
-            font-size: 12px;
-            color: #00d084;
-            margin-left: 8px;
+        .bar-gray {
+            background: #262626;
         }
 
-        .section-title {
+        .accounts-reached {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 0;
+            font-size: 15px;
+            margin-top: 4px;
+        }
+
+        .watch-time-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 20px;
+        }
+
+        .watch-time-title {
+            display: flex;
+            align-items: center;
+            gap: 6px;
             font-size: 18px;
             font-weight: 700;
-            margin: 28px 0 20px;
+            color: #fafafa;
+            margin-top: 15px;
+        }
+
+        .watch-time-value {
+            font-size: 15px;
+            font-weight: 600;
             color: #fafafa;
         }
 
-        .content-chips {
+        .view-rate-section {
+            margin-top: 28px;
+        }
+
+        .view-rate-title {
+            font-size: 14px;
+            font-weight: 600;
+            margin-bottom: 14px;
+            color: #fafafa;
+        }
+
+        .chips {
             display: flex;
             gap: 8px;
-            margin-bottom: 24px;
+            margin-bottom: 18px;
         }
 
         .chip {
@@ -272,376 +497,218 @@
             color: #fff;
         }
 
-        .content-item {
-            margin-bottom: 18px;
-        }
-
-        .content-bar {
-            width: 100%;
-            display: flex;
-            align-items: center;
-            gap: 13px;
-            margin-bottom: 4px;
-        }
-
-        .content-name {
-            color: #fafafa;
-            font-weight: 400;
-            font-size: 14px;
-            flex: 1;
-        }
-
-        .content-percentage {
-            color: #fafafa;
-            font-weight: 400;
-            font-size: 14px;
-            flex-shrink: 0;
-        }
-
-        .content-bar-wrapper {
+        .view-rate-bar {
             width: 100%;
             height: 8px;
             background: #262626;
             border-radius: 2px;
             overflow: hidden;
-            margin-top: 4px;
+            margin-bottom: 12px;
         }
 
-        .content-bar-fill {
-            height: 100%;
-            background: #8a3ee8;
-            border-radius: 2px;
-        }
-
-        .content-legend {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            margin-top: 8px;
-        }
-
-        .top-content-section {
-            margin-top: 28px;
-        }
-
-        .top-content-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .see-all {
-            color: #4d9fff;
-            font-size: 14px;
-            font-weight: 600;
-            cursor: pointer;
-        }
-
-        .content-thumbnail {
-            width: 120px;
-            height: 160px;
-            background: linear-gradient(180deg, #3d6b28 0%, #5a8f3d 50%, #3d6b28 100%);
-            border-radius: 10px;
-            overflow: hidden;
-            position: relative;
-            display: flex;
-            align-items: flex-end;
-            justify-content: center;
-            padding: 12px;
-        }
-
-        .content-views {
-            font-size: 18px;
-            font-weight: 700;
-            color: #fff;
-            text-shadow: 0 2px 8px rgba(0,0,0,0.5);
-        }
-
-        .content-date {
-            text-align: center;
-            font-size: 13px;
-            color: #a8a8a8;
-            margin-top: 8px;
-        }
-
-        .top-content-carousel {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-            padding-bottom: 8px;
-        }
-
-        .top-content-carousel::-webkit-scrollbar {
-            display: none;
-        }
-
-        .top-content-item {
-            flex-shrink: 0;
-            width: calc((100% - 36px) / 4);
-            min-width: 120px;
-        }
-
-        .audience-section {
-            margin-top: 28px;
-        }
-
-        .audience-cards {
-            display: flex;
-            gap: 12px;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -webkit-overflow-scrolling: touch;
-        }
-
-        .audience-cards::-webkit-scrollbar {
-            display: none;
-        }
-
-        .audience-card {
-            background: #1a1d23;
-            border-radius: 12px;
-            padding: 20px;
-            min-width: 280px;
-            flex-shrink: 0;
-        }
-
-        .audience-card-title {
-            font-size: 14px;
-            font-weight: 600;
-            color: #fafafa;
-            margin-bottom: 16px;
-        }
-
-        .audience-card-item {
-            display: flex;
-            justify-content: space-between;
-            padding: 10px 0;
-            font-size: 14px;
-        }
-
-        .audience-card-bar {
-            width: 100%;
-            height: 8px;
-            background: #262626;
-            border-radius: 2px;
-            overflow: hidden;
-            margin-top: 6px;
-        }
-
-        .audience-card-fill {
+        .view-rate-fill {
             height: 100%;
             background: #d72bcd;
             border-radius: 2px;
+            width: 50%;
         }
 
-        .profile-activity {
-            margin-top: 28px;
-        }
-
-        .profile-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 20px;
-        }
-
-        .profile-title {
+        .view-rate-legend {
             display: flex;
             align-items: center;
-            gap: 6px;
-            font-size: 18px;
-            font-weight: 700;
-            color: #fafafa;
+            gap: 8px;
+            font-size: 14px;
         }
 
-        .profile-value {
-            font-size: 18px;
-            font-weight: 700;
-            color: #fafafa;
-        }
-
-        .profile-subtitle {
-            font-size: 12px;
-            color: #a8a8a8;
-            margin-bottom: 16px;
-        }
-
-        .profile-change {
-            color: #00d084;
-        }
-
-        .info-icon {
-            width: 16px;
-            height: 16px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #fafafa;
+        .legend-dot {
+            width: 6px;
+            height: 6px;
+            background: #d72bcd;
+            border-radius: 50%;
             flex-shrink: 0;
         }
 
-        .info-icon svg {
+        .legend-text {
+            color: #fafafa;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .legend-percentage {
+            margin-left: auto;
+            color: #fafafa;
+            font-weight: 400;
+            font-size: 14px;
+        }
+
+        .interactions-section {
+            text-align: center;
+        }
+
+        .interaction-details {
+            margin-top: 0;
+            text-align: left;
+        }
+
+        .interaction-item {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 0;
+            font-size: 15px;
+        }
+
+        .interaction-item:not(:last-child) {
+            border-bottom: none;
+        }
+
+
+        .ad-section {
+            padding-bottom: 0 !important;
+        }
+        
+        .section:last-child .section-content {
+            padding-bottom: 0;
+        }
+
+        .ad-title {
+            font-size: 18px;
+            font-weight: 700;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            color: #fafafa;
+        }
+
+        .boost-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 13px 0;
+            width: 100%;
+        }
+
+        .boost-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .boost-icon {
+            width: 24px;
+            height: 24px;
+            display: flex;
+            align-items: center;
+        }
+
+        .boost-icon svg {
             width: 100%;
             height: 100%;
+            stroke: #fafafa;
+            stroke-width: 2;
+            fill: none;
+        }
+
+        .boost-text {
+            font-size: 14px;
+            font-weight: 400;
+            color: #fafafa;
+        }
+
+        .arrow-icon {
+            color: #a8a8a8;
+            font-size: 32px;
+            font-weight: 300;
         }
     </style>
 </head>
 <body>
     <div class="header">
-        <div class="header-top">
-            <div class="header-left">
-                <div class="back-btn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" fill="currentColor" viewBox="0 0 16 16" stroke="currentColor" stroke-width="0.5">
-                        <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
-                    </svg>
-                </div>
-                <div class="header-title">Views</div>
-            </div>
-            <div class="info-btn">
-                <svg fill="currentColor" height="22" role="img" viewBox="0 0 24 24" width="22">
-                    <circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
-                    <circle cx="11.819" cy="7.709" r="1.25"></circle>
-                    <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line>
-                    <polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
+        <div class="header-left">
+            <div class="back-btn">
+                <svg xmlns="http://www.w3.org/2000/svg" width="29" height="29" fill="currentColor" viewBox="0 0 16 16" stroke="currentColor" stroke-width="0.5">
+                    <path fill-rule="evenodd" d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"/>
                 </svg>
             </div>
+            <div class="header-title">Reel insights</div>
         </div>
-        <div class="date-section">
-            <div class="date-selector">
-                <span>Last 30 days</span>
-                <span>▼</span>
-            </div>
-            <div class="date-range">Dec 4 - Jan 2</div>
-        </div>
-    </div>
-
-    <div class="section-content">
-        <div class="views-circle">
-            <svg class="circle-svg" viewBox="0 0 200 200">
-                <circle class="circle-bg-path" cx="100" cy="100" r="80"/>
-                <path id="views-pink" class="circle-progress circle-pink"/>
-                <path id="views-blue" class="circle-progress circle-blue"/>
+        <div class="menu-btn">
+            <svg fill="currentColor" viewBox="0 0 24 24">
+                <circle cx="12" cy="5" r="1.5"/>
+                <circle cx="12" cy="12" r="1.5"/>
+                <circle cx="12" cy="19" r="1.5"/>
             </svg>
-            <div class="circle-content">
-                <div class="circle-label">Views</div>
-                <div class="circle-value">8,914</div>
-            </div>
         </div>
+    </div>
 
-        <div class="audience-breakdown">
-            <div class="audience-item">
-                <div class="audience-label">
-                    <div class="audience-dot dot-pink"></div>
-                    <span>Followers</span>
-                </div>
-                <div class="audience-value">20%</div>
-            </div>
-            <div class="audience-item">
-                <div class="audience-label">
-                    <div class="audience-dot dot-blue"></div>
-                    <span>Non-followers</span>
-                </div>
-                <div class="audience-value">80%</div>
-            </div>
-            <div class="audience-divider"></div>
+    <div class="video-preview">
+        <div class="video-thumbnail">
+            <img src="bazafoto.png" alt="Video thumbnail" class="thumbnail-image">
         </div>
+        <div class="video-caption">Follow @lack...</div>
+        <div class="video-date">November 21 · Duration 1:00</div>
+    </div>
 
-        <div class="stat-row">
-            <div class="stat-label">Accounts reached</div>
-            <div class="stat-value">
-                585
-                <span class="stat-change">-83.0%</span>
-            </div>
+    <div class="metrics">
+        <div class="metric">
+            <svg aria-label="Like icon" fill="#ffffff" height="20" role="img" viewBox="0 0 24 24" width="20">
+                <title>Like icon</title>
+                <path d="M20.884 13.19c-1.351 2.48-4.001 5.12-8.379 7.67l-.503.3-.504-.3c-4.379-2.55-7.029-5.19-8.382-7.67-1.36-2.5-1.41-4.86-.514-6.67.887-1.79 2.647-2.91 4.601-3.01 1.651-.09 3.368.56 4.798 2.01 1.429-1.45 3.146-2.1 4.796-2.01 1.954.1 3.714 1.22 4.601 3.01.896 1.81.846 4.17-.514 6.67z" fill="#ffffff" stroke="none"></path>
+            </svg>
+            <div class="metric-value">448</div>
         </div>
-        <div class="audience-divider"></div>
-
-        <div class="section-title">By content type</div>
-        
-        <div class="content-chips">
-            <button class="chip active">All</button>
-            <button class="chip">Followers</button>
-            <button class="chip">Non-followers</button>
+        <div class="metric">
+            <svg aria-label="Comment icon" fill="#ffffff" height="20" role="img" viewBox="0 0 24 24" width="20">
+                <title>Comment icon</title>
+                <path d="M20.656 17.008a9.993 9.993 0 1 0-3.59 3.615L22 22Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round" stroke-width="1.5"></path>
+            </svg>
+            <div class="metric-value">21</div>
         </div>
-
-        <div class="content-item">
-            <div class="content-bar">
-                <span class="content-name">Reels</span>
-                <span class="content-percentage">97.1%</span>
-            </div>
-            <div class="content-bar-wrapper">
-                <div class="content-bar-fill" style="width: 97.1%"></div>
-            </div>
+        <div class="metric">
+            <svg aria-label="Share icon" fill="#ffffff" height="20" role="img" viewBox="0 0 24 24" width="20">
+                <title>Share icon</title>
+                <path d="M13.973 20.046 21.77 6.928C22.8 5.195 21.55 3 19.535 3H4.466C2.138 3 .984 5.825 2.646 7.456l4.842 4.752 1.723 7.121c.548 2.266 3.571 2.721 4.762.717Z" fill="#ffffff" stroke="#ffffff" stroke-linejoin="round" stroke-width="1.5"></path>
+                <line stroke="#0c0f14" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="7.488" x2="15.515" y1="12.208" y2="7.641"></line>
+            </svg>
+            <div class="metric-value">508</div>
         </div>
-
-        <div class="content-item">
-            <div class="content-bar">
-                <span class="content-name">Posts</span>
-                <span class="content-percentage">2.9%</span>
-            </div>
-            <div class="content-bar-wrapper">
-                <div class="content-bar-fill" style="width: 2.9%"></div>
-            </div>
-            <div class="content-legend">
-                <div class="audience-dot dot-pink"></div>
-                <span class="stat-label">Followers</span>
-                <div class="audience-dot dot-blue" style="margin-left: 8px;"></div>
-                <span class="stat-label">Non-Followers</span>
-            </div>
-            <div class="audience-divider"></div>
+        <div class="metric">
+            <img src="newrepost.png" alt="Repost icon" style="width: 20px; height: 20px; object-fit: contain;">
+            <div class="metric-value">1</div>
         </div>
+        <div class="metric">
+            <svg aria-label="Save icon" fill="#ffffff" height="20" role="img" viewBox="0 0 24 24" width="20">
+                <title>Save icon</title>
+                <polygon points="20 21 12 13.44 4 21 4 3 20 3 20 21" fill="#ffffff" stroke="#ffffff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5"></polygon>
+            </svg>
+            <div class="metric-value">680</div>
+        </div>
+    </div>
 
-        <div class="top-content-section">
-            <div class="top-content-header">
-                <div class="section-title" style="margin: 0;">By top content</div>
-                <div class="see-all">See all</div>
+    <div class="section-divider"></div>
+
+    <div class="section">
+        <div class="section-content">
+            <div class="section-header">
+                <span>Overview</span>
+                <div class="info-icon">
+                    <svg aria-label="Info" fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16"><title>Info</title><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><circle cx="11.819" cy="7.709" r="1.25"></circle><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line><polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                </div>
             </div>
-
-            <div class="top-content-carousel">
-                <div class="top-content-item">
-                    <div class="content-thumbnail">
-                        <div class="content-views">21K</div>
-                    </div>
-                    <div class="content-date">Dec 18</div>
+            <div>
+                <div class="stat-row">
+                    <div class="stat-label">Views</div>
+                    <div class="stat-value">26,635</div>
                 </div>
-                <div class="top-content-item">
-                    <div class="content-thumbnail">
-                        <div class="content-views">18K</div>
-                    </div>
-                    <div class="content-date">Dec 17</div>
+                <div class="stat-row">
+                    <div class="stat-label">Watch time</div>
+                    <div class="stat-value">1d 4h 7m 17s</div>
                 </div>
-                <div class="top-content-item">
-                    <div class="content-thumbnail">
-                        <div class="content-views">15K</div>
-                    </div>
-                    <div class="content-date">Dec 16</div>
+                <div class="stat-row">
+                    <div class="stat-label">Interactions</div>
+                    <div class="stat-value">1,657</div>
                 </div>
-                <div class="top-content-item">
-                    <div class="content-thumbnail">
-                        <div class="content-views">12K</div>
-                    </div>
-                    <div class="content-date">Dec 15</div>
-                </div>
-                <div class="top-content-item">
-                    <div class="content-thumbnail">
-                        <div class="content-views">10K</div>
-                    </div>
-                    <div class="content-date">Dec 14</div>
-                </div>
-                <div class="top-content-item">
-                    <div class="content-thumbnail">
-                        <div class="content-views">8K</div>
-                    </div>
-                    <div class="content-date">Dec 13</div>
-                </div>
-                <div class="top-content-item">
-                    <div class="content-thumbnail">
-                        <div class="content-views">6K</div>
-                    </div>
-                    <div class="content-date">Dec 12</div>
+                <div class="stat-row">
+                    <div class="stat-label">Profile activity</div>
+                    <div class="stat-value">0</div>
                 </div>
             </div>
         </div>
@@ -649,123 +716,110 @@
 
     <div class="section-divider"></div>
 
-    <div class="section-content">
-        <div class="audience-section">
-            <div class="section-title">Audience</div>
-            
-            <div class="audience-cards">
-                <div class="audience-card">
-                    <div class="audience-card-title">Top cities</div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">London</span>
-                        <span class="stat-value">11.8%</span>
+    <div class="section">
+        <div class="section-content views-section">
+            <div class="section-header">
+                <span>Views</span>
+                <div class="info-icon">
+                    <svg aria-label="Info" fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16"><title>Info</title><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><circle cx="11.819" cy="7.709" r="1.25"></circle><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line><polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                </div>
+            </div>
+            <div class="views-circle">
+                <svg class="circle-svg" viewBox="0 0 200 200">
+                    <circle class="circle-bg-path" cx="100" cy="100" r="80"/>
+                    <path id="views-blue" class="circle-progress circle-blue"/>
+                    <path id="views-pink" class="circle-progress circle-pink"/>
+                </svg>
+                <div class="circle-content">
+                    <div class="circle-label">Views</div>
+                    <div class="circle-value">26,635</div>
+                </div>
+            </div>
+            <div class="audience-breakdown">
+                <div class="audience-item">
+                    <div class="audience-label">
+                        <div class="audience-dot dot-pink"></div>
+                        <span>Followers</span>
                     </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 11.8%"></div>
+                    <div class="audience-value">50%</div>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-label">
+                        <div class="audience-dot dot-blue"></div>
+                        <span>Non-followers</span>
                     </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">Montreal</span>
-                        <span class="stat-value">1.5%</span>
+                    <div class="audience-value">50%</div>
+                </div>
+                <div class="audience-divider"></div>
+            </div>
+
+            <div class="top-sources">
+                <div class="source-title">Top sources of views</div>
+                
+                <div class="source-item">
+                    <div class="source-label">
+                        <span class="source-name">Profile</span>
                     </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 1.5%"></div>
-                    </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">Toronto</span>
-                        <span class="stat-value">1.5%</span>
-                    </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 1.5%"></div>
-                    </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">Istanbul</span>
-                        <span class="stat-value">1.3%</span>
-                    </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 1.3%"></div>
+                    <div class="source-bar">
+                        <div class="source-bar-wrapper">
+                            <div class="source-bar-fill bar-pink" style="width: 50%"></div>
+                        </div>
+                        <span class="source-percentage">50%</span>
                     </div>
                 </div>
 
-                <div class="audience-card">
-                    <div class="audience-card-title">Top countries</div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">United States</span>
-                        <span class="stat-value">21.2%</span>
+                <div class="source-item">
+                    <div class="source-label">
+                        <span class="source-name">Feed</span>
                     </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 21.2%"></div>
-                    </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">United Kingdom</span>
-                        <span class="stat-value">17.6%</span>
-                    </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 17.6%"></div>
-                    </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">Canada</span>
-                        <span class="stat-value">9.0%</span>
-                    </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 9.0%"></div>
-                    </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">India</span>
-                        <span class="stat-value">8.4%</span>
-                    </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 8.4%"></div>
+                    <div class="source-bar">
+                        <div class="source-bar-wrapper">
+                            <div class="source-bar-fill bar-pink" style="width: 50%"></div>
+                        </div>
+                        <span class="source-percentage">50%</span>
                     </div>
                 </div>
 
-                <div class="audience-card">
-                    <div class="audience-card-title">Top age ranges</div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">25-34</span>
-                        <span class="stat-value">48.8%</span>
+                <div class="source-item">
+                    <div class="source-label">
+                        <span class="source-name">Reels tab</span>
                     </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 48.8%"></div>
-                    </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">18-24</span>
-                        <span class="stat-value">37.1%</span>
-                    </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 37.1%"></div>
-                    </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">35-44</span>
-                        <span class="stat-value">9.7%</span>
-                    </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 9.7%"></div>
-                    </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">45-54</span>
-                        <span class="stat-value">2.3%</span>
-                    </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 2.3%"></div>
+                    <div class="source-bar">
+                        <div class="source-bar-wrapper">
+                            <div class="source-bar-fill bar-pink" style="width: 50%"></div>
+                        </div>
+                        <span class="source-percentage">50%</span>
                     </div>
                 </div>
 
-                <div class="audience-card">
-                    <div class="audience-card-title">Gender</div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">Men</span>
-                        <span class="stat-value">92.4%</span>
+                <div class="source-item">
+                    <div class="source-label">
+                        <span class="source-name">Explore</span>
                     </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 92.4%"></div>
+                    <div class="source-bar">
+                        <div class="source-bar-wrapper">
+                            <div class="source-bar-fill bar-pink" style="width: 50%"></div>
+                        </div>
+                        <span class="source-percentage">50%</span>
                     </div>
-                    <div class="audience-card-item">
-                        <span class="stat-label">Women</span>
-                        <span class="stat-value">7.6%</span>
+                </div>
+
+                <div class="source-item">
+                    <div class="source-label">
+                        <span class="source-name">Search</span>
                     </div>
-                    <div class="audience-card-bar">
-                        <div class="audience-card-fill" style="width: 7.6%"></div>
+                    <div class="source-bar">
+                        <div class="source-bar-wrapper">
+                            <div class="source-bar-fill bar-pink" style="width: 50%"></div>
+                        </div>
+                        <span class="source-percentage">50%</span>
                     </div>
+                </div>
+                <div class="audience-divider"></div>
+
+                <div class="accounts-reached">
+                    <span class="stat-label">Accounts reached</span>
+                    <span class="stat-value">524</span>
                 </div>
             </div>
         </div>
@@ -773,96 +827,143 @@
 
     <div class="section-divider"></div>
 
-    <div class="section-content">
-        <div class="profile-activity">
-            <div class="profile-header">
-                <div class="profile-title">
+    <div class="section">
+        <div class="section-content">
+            <div class="watch-time-header">
+                <div class="watch-time-title">
+                    <span>Watch time</span>
+                    <div class="info-icon">
+                        <svg aria-label="Info" fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16"><title>Info</title><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><circle cx="11.819" cy="7.709" r="1.25"></circle><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line><polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                    </div>
+                </div>
+                <div class="watch-time-value">1d 4h 7m 17s</div>
+            </div>
+            <div class="stat-row">
+                <div class="stat-label">Average watch time</div>
+                <div class="stat-value">18sec</div>
+            </div>
+            <div class="audience-divider"></div>
+
+            <div class="view-rate-section">
+                <div class="view-rate-title">View rate past first 3 seconds</div>
+                <div class="chips">
+                    <button class="chip active">All</button>
+                    <button class="chip">Followers</button>
+                    <button class="chip">Non-followers</button>
+                </div>
+                <div class="view-rate-bar">
+                    <div class="view-rate-fill"></div>
+                </div>
+                <div class="view-rate-legend">
+                    <div class="legend-dot"></div>
+                    <span class="legend-text">This reel</span>
+                    <span class="legend-percentage">99.9%</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section">
+        <div class="section-content interactions-section">
+            <div class="section-header">
+                <span>Interactions</span>
+                <div class="info-icon">
+                    <svg aria-label="Info" fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16"><title>Info</title><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><circle cx="11.819" cy="7.709" r="1.25"></circle><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line><polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
+                </div>
+            </div>
+            <div class="views-circle">
+                <svg class="circle-svg" viewBox="0 0 200 200">
+                    <circle class="circle-bg-path" cx="100" cy="100" r="80"/>
+                    <path id="interactions-blue" class="circle-progress circle-blue"/>
+                    <path id="interactions-pink" class="circle-progress circle-pink"/>
+                </svg>
+                <div class="circle-content">
+                    <div class="circle-label">Interactions</div>
+                    <div class="circle-value">1,657</div>
+                </div>
+            </div>
+            <div class="audience-breakdown">
+                <div class="audience-item">
+                    <div class="audience-label">
+                        <div class="audience-dot dot-pink"></div>
+                        <span>Followers</span>
+                    </div>
+                    <div class="audience-value">50%</div>
+                </div>
+                <div class="audience-item">
+                    <div class="audience-label">
+                        <div class="audience-dot dot-blue"></div>
+                        <span>Non-followers</span>
+                    </div>
+                    <div class="audience-value">50%</div>
+                </div>
+                <div class="audience-divider"></div>
+            </div>
+
+            <div class="interaction-details">
+                <div class="interaction-item">
+                    <div class="stat-label">Saves</div>
+                    <div class="stat-value">680</div>
+                </div>
+                <div class="interaction-item">
+                    <div class="stat-label">Shares</div>
+                    <div class="stat-value">508</div>
+                </div>
+                <div class="interaction-item">
+                    <div class="stat-label">Likes</div>
+                    <div class="stat-value">448</div>
+                </div>
+                <div class="interaction-item">
+                    <div class="stat-label">Comments</div>
+                    <div class="stat-value">21</div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section-divider"></div>
+
+    <div class="section">
+        <div class="section-content">
+            <div class="section-header profile-activity-header">
+                <div class="profile-activity-title">
                     <span>Profile activity</span>
                     <div class="info-icon">
-                        <svg fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16">
-                            <circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle>
-                            <circle cx="11.819" cy="7.709" r="1.25"></circle>
-                            <line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line>
-                            <polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline>
-                        </svg>
+                        <svg aria-label="Info" fill="currentColor" height="16" role="img" viewBox="0 0 24 24" width="16"><title>Info</title><circle cx="12.001" cy="12.005" fill="none" r="10.5" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></circle><circle cx="11.819" cy="7.709" r="1.25"></circle><line fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" x1="10.569" x2="13.432" y1="16.777" y2="16.777"></line><polyline fill="none" points="10.569 11.05 12 11.05 12 16.777" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2"></polyline></svg>
                     </div>
                 </div>
-                <div class="profile-value">25</div>
-            </div>
-            <div class="profile-subtitle">
-                vs Nov 4 - Dec 3 <span class="profile-change">+38.9%</span>
-            </div>
-            
-            <div class="stat-row">
-                <div class="stat-label">Profile visits</div>
-                <div class="stat-value">
-                    25
-                    <span class="stat-change">+38.9%</span>
-                </div>
+                <div class="profile-activity-value">0</div>
             </div>
             <div class="stat-row">
-                <div class="stat-label">External link taps</div>
+                <div class="stat-label">Follows</div>
                 <div class="stat-value">0</div>
             </div>
         </div>
     </div>
 
-    <script>
-        const cx = 100;
-        const cy = 100;
-        const r = 80;
+    <div class="section-divider"></div>
 
-        // Утилита: полярные → декартовы
-        function polar(cx, cy, r, angle) {
-            const rad = (angle - 90) * Math.PI / 180;
-            return {
-                x: cx + r * Math.cos(rad),
-                y: cy + r * Math.sin(rad)
-            };
-        }
-
-        // Дуга SVG
-        function arcPath(cx, cy, r, startAngle, endAngle) {
-            const start = polar(cx, cy, r, startAngle);
-            const end = polar(cx, cy, r, endAngle);
-            const largeArc = endAngle - startAngle > 180 ? 1 : 0;
-
-            return `
-                M ${start.x} ${start.y}
-                A ${r} ${r} 0 ${largeArc} 1 ${end.x} ${end.y}
-            `;
-        }
-
-        function updateChart(blueId, pinkId, bluePercent) {
-            const gapDeg = 8;
-            const totalGap = gapDeg * 2;
-            const usable = 360 - totalGap;
-            const blueDeg = usable * (bluePercent / 100);
-            const pinkDeg = usable - blueDeg;
-
-            let angle = 0;
-            angle += gapDeg;
-
-            const pinkStart = angle;
-            const pinkEnd = angle + pinkDeg;
-            angle = pinkEnd;
-            angle += gapDeg;
-
-            const blueStart = angle;
-            const blueEnd = angle + blueDeg;
-
-            const pinkPath = document.getElementById(pinkId);
-            const bluePath = document.getElementById(blueId);
+    <div class="section">
+        <div class="section-content ad-section">
+            <h2 class="ad-title">Ad</h2>
             
-            if (pinkPath) pinkPath.setAttribute('d', arcPath(cx, cy, r, pinkStart, pinkEnd));
-            if (bluePath) bluePath.setAttribute('d', arcPath(cx, cy, r, blueStart, blueEnd));
-        }
+            <div class="boost-row">
+                <div class="boost-left">
+                    <div class="boost-icon">
+                        <svg viewBox="0 0 24 24">
+                            <polyline points="22 7 13.5 15.5 8.5 10.5 2 17" stroke-linecap="round" stroke-linejoin="round"/>
+                            <polyline points="16 7 22 7 22 13" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                    </div>
+                    <span class="boost-text">Boost this Reel</span>
+                </div>
+                <span class="arrow-icon">›</span>
+            </div>
+        </div>
+    </div>
 
-        // Инициализация круга при загрузке
-        window.addEventListener('DOMContentLoaded', () => {
-            // Views: 20% розовый (followers), 80% синий (non-followers)
-            updateChart('views-blue', 'views-pink', 80);
-        });
-    </script>
+    <script src="script.js"></script>
 </body>
 </html>
