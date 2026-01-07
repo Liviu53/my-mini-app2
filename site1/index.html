@@ -225,7 +225,7 @@
         .stat-row {
             display: flex;
             justify-content: space-between;
-            padding: 12px 0;
+            padding: 10px 0;
             font-size: 14px;
             align-items: center;
         }
@@ -324,8 +324,19 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            gap: 8px;
-            margin-top: 8px;
+            gap: 60px;
+            margin-top: 25px;
+            margin-bottom: 25px;
+        }
+        
+        .content-legend .stat-label {
+            font-size: 10px;
+        }
+        
+        .legend-group {
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
 
         .top-content-section {
@@ -595,10 +606,14 @@
                 <div class="content-bar-fill" style="width: 2.9%"></div>
             </div>
             <div class="content-legend">
-                <div class="audience-dot dot-pink"></div>
-                <span class="stat-label">Followers</span>
-                <div class="audience-dot dot-blue" style="margin-left: 8px;"></div>
-                <span class="stat-label">Non-Followers</span>
+                <div class="legend-group">
+                    <div class="audience-dot dot-pink"></div>
+                    <span class="stat-label">Followers</span>
+                </div>
+                <div class="legend-group">
+                    <div class="audience-dot dot-blue"></div>
+                    <span class="stat-label">Non-Followers</span>
+                </div>
             </div>
             <div class="audience-divider"></div>
         </div>
@@ -880,4 +895,3 @@
     </script>
 </body>
 </html>
-
