@@ -358,8 +358,8 @@
         }
 
         .content-thumbnail {
-            width: 85px;
-            height: 113px;
+            width: 80px;
+            height: 142px;
             background: linear-gradient(180deg, #3d6b28 0%, #5a8f3d 50%, #3d6b28 100%);
             border-radius: 10px;
             overflow: hidden;
@@ -382,11 +382,18 @@
             font-size: 13px;
             color: #a8a8a8;
             margin-top: 8px;
+            width: 100%;
+        }
+        
+        .top-content-item {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .top-content-carousel {
             display: flex;
-            gap: 8px;
+            gap: 10px;
             overflow-x: auto;
             scrollbar-width: none;
             -webkit-overflow-scrolling: touch;
@@ -399,8 +406,10 @@
 
         .top-content-item {
             flex-shrink: 0;
-            width: calc((100% - 36px) / 4);
-            min-width: 120px;
+            width: 80px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .audience-section {
