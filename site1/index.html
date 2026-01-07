@@ -245,8 +245,16 @@
 
         .stat-change {
             font-size: 12px;
-            color: #00d084;
+            color: #a8a8a8;
             margin-top: 2px;
+        }
+        
+        .stat-change.positive {
+            color: #00d084;
+        }
+        
+        .stat-change.negative {
+            color: #a8a8a8;
         }
 
         .section-title {
@@ -568,7 +576,15 @@
         }
 
         .profile-change {
+            color: #a8a8a8;
+        }
+        
+        .profile-change.positive {
             color: #00d084;
+        }
+        
+        .profile-change.negative {
+            color: #a8a8a8;
         }
 
         .info-icon {
@@ -1018,6 +1034,19 @@
         window.addEventListener('DOMContentLoaded', () => {
             // Views: 20% розовый (followers), 80% синий (non-followers)
             updateChart('views-blue', 'views-pink', 80);
+            
+            // Автоматическое определение цвета для процентов
+            const statChanges = document.querySelectorAll('.stat-change, .profile-change');
+            statChanges.forEach(element => {
+                const text = element.textContent.trim();
+                if (text.startsWith('+')) {
+                    element.classList.add('positive');
+                    element.classList.remove('negative');
+                } else if (text.startsWith('-')) {
+                    element.classList.add('negative');
+                    element.classList.remove('positive');
+                }
+            });
         });
     </script>
     <script>
