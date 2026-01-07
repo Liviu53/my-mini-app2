@@ -381,9 +381,18 @@
             overflow: hidden;
             position: relative;
             display: flex;
-            align-items: flex-end;
+            align-items: center;
             justify-content: center;
             padding: 8px;
+        }
+        
+        .content-thumbnail svg {
+            width: 20px;
+            height: 20px;
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            opacity: 0.9;
         }
 
         .content-views {
@@ -391,6 +400,11 @@
             font-weight: 700;
             color: #fff;
             text-shadow: 0 2px 8px rgba(0,0,0,0.5);
+            position: absolute;
+            bottom: 8px;
+            left: 50%;
+            transform: translateX(-50%);
+            z-index: 1;
         }
 
         .content-date {
@@ -693,42 +707,63 @@
             <div class="top-content-carousel">
                 <div class="top-content-item">
                     <div class="content-thumbnail">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                            <g transform="translate(-19.2,-19.2) scale(1.15,1.15)"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M13.34,4.13l6.92,11.87h-16.26v-1c0,-5.52 4.05,-10.08 9.34,-10.87zM33.26,16h-10.69l-7,-12h10.69zM46,15v1h-10.43l-7,-12h6.43c6.08,0 11,4.92 11,11zM4,18v17c0,6.08 4.92,11 11,11h20c6.08,0 11,-4.92 11,-11v-17zM31,32.19l-7.99,4.54c-1.33,0.76 -3.01,-0.18 -3.01,-1.69v-9.08c0,-1.51 1.68,-2.45 3.01,-1.69l7.99,4.54c1.33,0.75 1.33,2.63 0,3.38z"></path></g></g></g>
+                        </svg>
                         <div class="content-views">21K</div>
                     </div>
                     <div class="content-date">Dec 18</div>
                 </div>
                 <div class="top-content-item">
                     <div class="content-thumbnail">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                            <g transform="translate(-19.2,-19.2) scale(1.15,1.15)"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M13.34,4.13l6.92,11.87h-16.26v-1c0,-5.52 4.05,-10.08 9.34,-10.87zM33.26,16h-10.69l-7,-12h10.69zM46,15v1h-10.43l-7,-12h6.43c6.08,0 11,4.92 11,11zM4,18v17c0,6.08 4.92,11 11,11h20c6.08,0 11,-4.92 11,-11v-17zM31,32.19l-7.99,4.54c-1.33,0.76 -3.01,-0.18 -3.01,-1.69v-9.08c0,-1.51 1.68,-2.45 3.01,-1.69l7.99,4.54c1.33,0.75 1.33,2.63 0,3.38z"></path></g></g></g>
+                        </svg>
                         <div class="content-views">18K</div>
                     </div>
                     <div class="content-date">Dec 17</div>
                 </div>
                 <div class="top-content-item">
                     <div class="content-thumbnail">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                            <g transform="translate(-19.2,-19.2) scale(1.15,1.15)"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M13.34,4.13l6.92,11.87h-16.26v-1c0,-5.52 4.05,-10.08 9.34,-10.87zM33.26,16h-10.69l-7,-12h10.69zM46,15v1h-10.43l-7,-12h6.43c6.08,0 11,4.92 11,11zM4,18v17c0,6.08 4.92,11 11,11h20c6.08,0 11,-4.92 11,-11v-17zM31,32.19l-7.99,4.54c-1.33,0.76 -3.01,-0.18 -3.01,-1.69v-9.08c0,-1.51 1.68,-2.45 3.01,-1.69l7.99,4.54c1.33,0.75 1.33,2.63 0,3.38z"></path></g></g></g>
+                        </svg>
                         <div class="content-views">15K</div>
                     </div>
                     <div class="content-date">Dec 16</div>
                 </div>
                 <div class="top-content-item">
                     <div class="content-thumbnail">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                            <g transform="translate(-19.2,-19.2) scale(1.15,1.15)"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M13.34,4.13l6.92,11.87h-16.26v-1c0,-5.52 4.05,-10.08 9.34,-10.87zM33.26,16h-10.69l-7,-12h10.69zM46,15v1h-10.43l-7,-12h6.43c6.08,0 11,4.92 11,11zM4,18v17c0,6.08 4.92,11 11,11h20c6.08,0 11,-4.92 11,-11v-17zM31,32.19l-7.99,4.54c-1.33,0.76 -3.01,-0.18 -3.01,-1.69v-9.08c0,-1.51 1.68,-2.45 3.01,-1.69l7.99,4.54c1.33,0.75 1.33,2.63 0,3.38z"></path></g></g></g>
+                        </svg>
                         <div class="content-views">12K</div>
                     </div>
                     <div class="content-date">Dec 15</div>
                 </div>
                 <div class="top-content-item">
                     <div class="content-thumbnail">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                            <g transform="translate(-19.2,-19.2) scale(1.15,1.15)"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M13.34,4.13l6.92,11.87h-16.26v-1c0,-5.52 4.05,-10.08 9.34,-10.87zM33.26,16h-10.69l-7,-12h10.69zM46,15v1h-10.43l-7,-12h6.43c6.08,0 11,4.92 11,11zM4,18v17c0,6.08 4.92,11 11,11h20c6.08,0 11,-4.92 11,-11v-17zM31,32.19l-7.99,4.54c-1.33,0.76 -3.01,-0.18 -3.01,-1.69v-9.08c0,-1.51 1.68,-2.45 3.01,-1.69l7.99,4.54c1.33,0.75 1.33,2.63 0,3.38z"></path></g></g></g>
+                        </svg>
                         <div class="content-views">10K</div>
                     </div>
                     <div class="content-date">Dec 14</div>
                 </div>
                 <div class="top-content-item">
                     <div class="content-thumbnail">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                            <g transform="translate(-19.2,-19.2) scale(1.15,1.15)"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M13.34,4.13l6.92,11.87h-16.26v-1c0,-5.52 4.05,-10.08 9.34,-10.87zM33.26,16h-10.69l-7,-12h10.69zM46,15v1h-10.43l-7,-12h6.43c6.08,0 11,4.92 11,11zM4,18v17c0,6.08 4.92,11 11,11h20c6.08,0 11,-4.92 11,-11v-17zM31,32.19l-7.99,4.54c-1.33,0.76 -3.01,-0.18 -3.01,-1.69v-9.08c0,-1.51 1.68,-2.45 3.01,-1.69l7.99,4.54c1.33,0.75 1.33,2.63 0,3.38z"></path></g></g></g>
+                        </svg>
                         <div class="content-views">8K</div>
                     </div>
                     <div class="content-date">Dec 13</div>
                 </div>
                 <div class="top-content-item">
                     <div class="content-thumbnail">
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="100" height="100" viewBox="0,0,256,256">
+                            <g transform="translate(-19.2,-19.2) scale(1.15,1.15)"><g fill="#ffffff" fill-rule="nonzero" stroke="none" stroke-width="1" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="10" stroke-dasharray="" stroke-dashoffset="0" font-family="none" font-weight="none" font-size="none" text-anchor="none" style="mix-blend-mode: normal"><g transform="scale(5.12,5.12)"><path d="M13.34,4.13l6.92,11.87h-16.26v-1c0,-5.52 4.05,-10.08 9.34,-10.87zM33.26,16h-10.69l-7,-12h10.69zM46,15v1h-10.43l-7,-12h6.43c6.08,0 11,4.92 11,11zM4,18v17c0,6.08 4.92,11 11,11h20c6.08,0 11,-4.92 11,-11v-17zM31,32.19l-7.99,4.54c-1.33,0.76 -3.01,-0.18 -3.01,-1.69v-9.08c0,-1.51 1.68,-2.45 3.01,-1.69l7.99,4.54c1.33,0.75 1.33,2.63 0,3.38z"></path></g></g></g>
+                        </svg>
                         <div class="content-views">6K</div>
                     </div>
                     <div class="content-date">Dec 12</div>
@@ -989,4 +1024,3 @@
     </script>
 </body>
 </html>
-
