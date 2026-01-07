@@ -340,8 +340,23 @@
 
         .content-bar-fill {
             height: 100%;
-            background: #7638FB;
+            background: transparent;
             border-radius: 2px;
+            display: flex;
+            position: relative;
+        }
+        
+        .content-bar-fill-pink {
+            height: 100%;
+            background: #DC37D1;
+            border-radius: 2px 0 0 2px;
+        }
+        
+        .content-bar-fill-blue {
+            height: 100%;
+            background: #7638FB;
+            border-radius: 0 2px 2px 0;
+            margin-left: 2px;
         }
 
         .content-legend {
@@ -697,7 +712,10 @@
             </div>
             <div class="content-bar-container">
                 <div class="content-bar-wrapper">
-                    <div class="content-bar-fill" style="width: 97.1%"></div>
+                    <div class="content-bar-fill" style="width: 97.1%" data-total="97.1" data-pink="10" data-blue="90">
+                        <div class="content-bar-fill-pink" style="width: 0%"></div>
+                        <div class="content-bar-fill-blue" style="width: 0%"></div>
+                    </div>
                 </div>
                 <span class="content-percentage">97.1%</span>
             </div>
@@ -709,7 +727,10 @@
             </div>
             <div class="content-bar-container">
                 <div class="content-bar-wrapper">
-                    <div class="content-bar-fill" style="width: 2.9%"></div>
+                    <div class="content-bar-fill" style="width: 2.9%" data-total="2.9" data-pink="30" data-blue="70">
+                        <div class="content-bar-fill-pink" style="width: 0%"></div>
+                        <div class="content-bar-fill-blue" style="width: 0%"></div>
+                    </div>
                 </div>
                 <span class="content-percentage">2.9%</span>
             </div>
@@ -1064,6 +1085,36 @@
                 } else if (text.startsWith('-')) {
                     element.classList.add('negative');
                     element.classList.remove('positive');
+                }
+            });
+            
+            // Инициализация двухцветных шкал в разделе By content type
+            const contentBars = document.querySelectorAll('.content-bar-fill[data-total]');
+            contentBars.forEach(bar => {
+                const pinkPercent = parseFloat(bar.getAttribute('data-pink'));
+                const bluePercent = parseFloat(bar.getAttribute('data-blue'));
+                
+                // Рассчитываем ширину каждого цвета внутри общей шкалы
+                // pinkPercent и bluePercent должны в сумме давать 100%
+                // Нормализуем проценты, чтобы сумма всегда была 100%
+                const totalPercent = pinkPercent + bluePercent;
+                const normalizedPink = (pinkPercent / totalPercent) * 100;
+                const normalizedBlue = (bluePercent / totalPercent) * 100;
+                
+                // Ширина элементов должна быть в процентах от родителя .content-bar-fill
+                // который уже имеет ширину total%. Поэтому используем нормализованные проценты напрямую
+                const pinkElement = bar.querySelector('.content-bar-fill-pink');
+                const blueElement = bar.querySelector('.content-bar-fill-blue');
+                
+                if (pinkElement && blueElement) {
+                    // Устанавливаем ширину как проценты от родительского контейнера
+                    pinkElement.style.width = normalizedPink + '%';
+                    blueElement.style.width = normalizedBlue + '%';
+                    // Убеждаемся, что элементы не сжимаются
+                    pinkElement.style.flexShrink = '0';
+                    blueElement.style.flexShrink = '0';
+                    pinkElement.style.minWidth = '0';
+                    blueElement.style.minWidth = '0';
                 }
             });
         });
