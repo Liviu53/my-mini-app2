@@ -980,6 +980,58 @@
         window.addEventListener('DOMContentLoaded', () => {
             // Views: 20% розовый (followers), 80% синий (non-followers)
             updateChart('views-blue', 'views-pink', 80);
+            
+            // Функция для строгой фиксации элементов в карусели
+            function setupCarouselSnap(carouselSelector, itemSelector) {
+                const carousel = document.querySelector(carouselSelector);
+                if (!carousel) return;
+                
+                let isScrolling = false;
+                let scrollTimeout;
+                
+                carousel.addEventListener('scroll', () => {
+                    isScrolling = true;
+                    clearTimeout(scrollTimeout);
+                    
+                    scrollTimeout = setTimeout(() => {
+                        isScrolling = false;
+                        const items = carousel.querySelectorAll(itemSelector);
+                        if (items.length === 0) return;
+                        
+                        let closestItem = null;
+                        let closestDistance = Infinity;
+                        const scrollLeft = carousel.scrollLeft;
+                        const containerLeft = carousel.getBoundingClientRect().left;
+                        
+                        items.forEach((item) => {
+                            const itemLeft = item.getBoundingClientRect().left;
+                            const itemCenter = itemLeft + item.offsetWidth / 2;
+                            const containerCenter = containerLeft + carousel.offsetWidth / 2;
+                            const distance = Math.abs(itemCenter - containerCenter);
+                            
+                            if (distance < closestDistance) {
+                                closestDistance = distance;
+                                closestItem = item;
+                            }
+                        });
+                        
+                        if (closestItem) {
+                            const itemLeft = closestItem.getBoundingClientRect().left;
+                            const containerLeft = carousel.getBoundingClientRect().left;
+                            const scrollOffset = itemLeft - containerLeft - 16;
+                            
+                            carousel.scrollTo({
+                                left: carousel.scrollLeft + scrollOffset,
+                                behavior: 'smooth'
+                            });
+                        }
+                    }, 150);
+                });
+            }
+            
+            // Настройка snap для обеих каруселей
+            setupCarouselSnap('.top-content-carousel', '.top-content-item');
+            setupCarouselSnap('.audience-cards', '.audience-card');
         });
     </script>
     <script>
