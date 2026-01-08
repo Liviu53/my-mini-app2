@@ -34,7 +34,7 @@ const config = {
         accountsReached: 19999,
         topSources: {
             profile: 9.5,    // Процент просмотров из профиля
-            feed: 1,       // Процент просмотров из ленты
+            feed: 55,       // Процент просмотров из ленты
             reelsTab: 2,   // Процент просмотров из вкладки Reels
             explore: 3,    // Процент просмотров из Explore
             search: 50     // Процент просмотров из поиска
@@ -151,6 +151,12 @@ function updateMetrics() {
             // Сортировка по убыванию процента
             itemsWithData.sort((a, b) => b.percentage - a.percentage);
             
+            // Сохраняем accounts-reached и верхний разделитель перед сортировкой
+            const accountsReachedDiv = topSourcesContainer.querySelector('.accounts-reached');
+            let dividerBefore = accountsReachedDiv && accountsReachedDiv.previousElementSibling && 
+                               accountsReachedDiv.previousElementSibling.classList.contains('audience-divider') 
+                               ? accountsReachedDiv.previousElementSibling : null;
+            
             // Обновление значений и перестановка элементов
             itemsWithData.forEach((itemData) => {
                 const fill = itemData.element.querySelector('.source-bar-fill');
@@ -164,9 +170,22 @@ function updateMetrics() {
                 // Переставляем элемент в правильную позицию (appendChild перемещает существующий элемент)
                 topSourcesContainer.appendChild(itemData.element);
             });
+            
+            // Добавляем "Accounts reached" в конец после всех шкал (только с верхним разделителем)
+            if (accountsReachedDiv) {
+                // Создаем верхний разделитель если его нет
+                if (!dividerBefore) {
+                    dividerBefore = document.createElement('div');
+                    dividerBefore.className = 'audience-divider';
+                }
+                
+                // Добавляем разделитель и accounts-reached в конец
+                topSourcesContainer.appendChild(dividerBefore);
+                topSourcesContainer.appendChild(accountsReachedDiv);
+            }
         }
         
-        // Accounts reached
+        // Accounts reached - обновление значения
         const accountsReached = viewsSection.querySelector('.accounts-reached .stat-value');
         if (accountsReached) accountsReached.textContent = formatNumber(config.views.accountsReached);
     }
